@@ -1,0 +1,111 @@
+body {
+    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+/*FONT*/
+@font-face {
+    font-family: "Tideway";
+    src: url("/stylesheets/Tideway.ttf");
+}
+a {
+    color: #00B7FF;
+}
+/*TEMPLATES*/
+/*HEADER*/
+.navbar-inverse{
+    border-radius: 0;
+    margin-bottom: 0px;
+}
+.navbar-inverse .navbar-brand{
+    font-family: "Tideway";
+    font-size: 30px;
+    color: #fff;
+}
+.nav.navbar-nav>li>a{
+    color: #fff;
+}
+.nav.navbar-nav>li>a:hover{
+    cursor: pointer;
+}
+cite{
+    vertical-align: middle;
+    padding-top: 40px;
+    text-indent: 10px;
+    font-family: "Tideway";
+    font-size: 25px;
+    color: #fff;
+  }
+/*FOOTER*/
+footer{
+    height: 100px;
+    background: #000;
+}
+
+
+
+
+
+/*PAGES*/
+
+/*PAGE INDEX*/
+/*USER PANEL*/
+.jumbotron.userPanel{
+    border-radius: 0px;
+    padding: 10px;
+    margin-bottom: 0px;
+}
+.avatar_outer{
+    margin-left: 350px;
+    width: 750px;
+    background: url("/images/arrow.png") no-repeat;
+}
+.avatar_inner{
+    width: 400px;
+    padding: 10px 10px 0 10px;
+}
+.avatar_inner p{
+    color:#aaa;
+}
+.avatar{
+    background: url("/images/default.jpg");
+    background-size: 100%;
+    width: 100px;
+    height:100px;
+    border-radius: 100%;
+    margin: 0 auto 10px auto;
+}
+/*NEWS PANEL*/
+.news_carousel{
+    height: 400px;
+    background: #000;
+}
+.news_list{
+    height:400px;
+    background: #ccc;
+}
+/*LIST PANEL*/
+.listPanel{
+    margin-top: 10px;
+}
+.item img{
+    height: 200px;
+}
+
+/*PAGE LOGIN*/
+.loginPanel{
+    padding: 50px 30px;
+    background: #cccccc;
+}
+.info,.login_form{
+    height: 400px;
+}
+.login_form{
+    padding-top: 70px;
+    background: #fff;
+}
+.form-item.focus{
+    box-shadow: 0 0 5px 5px blue;
+}
+.tips{
+    padding-left: 0;
+    padding-right: 0;
+}

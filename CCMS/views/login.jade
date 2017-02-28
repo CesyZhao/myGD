@@ -1,0 +1,35 @@
+extends layout
+
+block content
+    div.container
+        include templates/header
+        //登录模块
+        div.loginPanel
+            div.row
+                div.col-md-9.jumbotron.info
+                    h1 there will be your second home
+                div.col-md-3.login_form
+                    //登录表单
+                    form
+                        h2.text-center 登录
+                        div.form-group
+                            div.input-group.form-item
+                                span.input-group-addon
+                                    span.glyphicon.glyphicon-user
+                                input(class="form-control",type="text",name="loginUsername",placeholder="请输入用户名")
+                        div.form-group
+                            div.input-group.form-item
+                                span.input-group-addon
+                                    span.glyphicon.glyphicon-lock
+                                input(class="form-control",type="password",name="loginPassword",placeholder="请输入密码")
+                        div.form-group
+                            button.btn.btn-block.btn-default 登录
+                        div.form-group
+                            div.tips.col-md-9
+                                span 新来的？点击
+                                a(href="") 这里
+                                span 注册
+                            div.tips.col-md-3
+                                a(href="") 忘记密码
+
+        include templates/footer

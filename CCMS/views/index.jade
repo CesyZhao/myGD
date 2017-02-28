@@ -1,0 +1,74 @@
+extends layout
+
+block content
+    div.container
+        //导航
+        include templates/header
+        //用户面板
+        div.jumbotron.userPanel
+            div.container
+                div.avatar_outer
+                    div.avatar_inner
+                        div.avatar
+                        p 你还没有登录，请先点击右上方按钮登录
+        //新闻模块
+        div.newsPanel.row
+            div.container
+                //新闻图片轮播
+                div(class="news_carousel col-md-9 carousel slide",id="news_carousel",data-slide="carousel")
+                    div.carousel-inner
+                        div.item.active
+                            img
+                            div.carousel-caption
+                    ol.carousel-indicators
+                        li(data-target="#news_carousel", data-slide="0",class="active")
+                //新闻列表
+                div.news_list.col-md-3
+        //社团列表
+        div.listPanel
+            //第一行
+            div.row
+                div.item.col-md-3
+                    a.thumbnail
+                        img
+                        div.caption
+                            p
+                div.item.col-md-3
+                    a.thumbnail
+                        img
+                        div.caption
+                            p
+                div.item.col-md-3
+                    a.thumbnail
+                        img
+                        div.caption
+                            p
+                div.item.col-md-3
+                    a.thumbnail
+                        img
+                        div.caption
+                            p
+            //第二行
+            div.row
+                div.item.col-md-3
+                    a.thumbnail
+                        img
+                        div.caption
+                            p
+                div.item.col-md-3
+                    a.thumbnail
+                        img
+                        div.caption
+                            p
+                div.item.col-md-3
+                    a.thumbnail
+                        img
+                        div.caption
+                            p
+                div.item.col-md-3
+                    a.thumbnail
+                        img
+                        div.caption
+                            p
+        //页尾
+        include templates/footer
