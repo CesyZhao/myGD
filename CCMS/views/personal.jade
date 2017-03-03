@@ -1,0 +1,45 @@
+extends layout
+block content
+    div.container
+        include templates/header
+        div.title.panel.panel-default.text-center
+            h3 个人中心
+        //账号信息模块
+        div.accountInfoPanel.panel.panel-default
+            div.panel-heading
+                h4 账号信息
+            div.panel-body.row
+                //头像栏
+                div.col-md-3
+                    div.panel.panel-default
+                        div.panel-heading 头像管理
+                        div.panel-body.second
+                            div.avatar
+                            form(enctype="multipart")
+                                //上传照片按钮
+                                div.form-group.text-center
+                                    a(href="javascript:void(0)",class="upload")
+                                        input(type="file",name="file")
+                                        span 点击更换头像
+                //用户名栏
+                div.col-md-3
+                    div.panel.panel-default
+                        div.panel-heading 用户名管理
+                        div.panel-body.second
+                            div.form-group
+                //密码管理栏
+                div.col-md-3
+                    div.panel.panel-default
+                        div.panel-heading 密码管理
+                        div.panel-body.second
+                //账号类型栏
+                div.col-md-3
+                    div.panel.panel-default
+                        div.panel-heading 账号类型
+                        div.panel-body.second
+        //详细信息栏
+        div.realInfoPanel.panel.panel-default
+            div.panel-heading
+                h4 详细信息
+            div.panel-body
+        include templates/footer

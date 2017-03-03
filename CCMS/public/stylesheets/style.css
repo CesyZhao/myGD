@@ -91,14 +91,14 @@ footer{
 }
 
 /*PAGE LOGIN*/
-.loginPanel{
+.loginPanel,.registerPanel{
     padding: 50px 30px;
     background: #cccccc;
 }
-.info,.login_form{
+.info,.login_form,.register_form{
     height: 400px;
 }
-.login_form{
+.login_form,.register_form{
     padding-top: 70px;
     background: #fff;
 }
@@ -108,4 +108,62 @@ footer{
 .tips{
     padding-left: 0;
     padding-right: 0;
+}
+
+/*PAGE PERSONAL*/
+.title,.accountInfoPanel,.realInfoPanel{
+    border-radius: 0;
+    margin-bottom: 0;
+    border-top: none;
+    box-shadow: none;
+}
+.title{
+    padding-top: 20px;
+    padding-bottom: 10px;
+}
+.title h3{
+    margin-top: 0px;
+}
+.avatarPanel{
+
+}
+.avatarbox{
+    width: 400px;
+    height: 150px;
+    margin: 0 auto;
+}
+.upload {
+    float: left;
+    padding: 6px 12px;
+    position: relative;
+    left: 25%;
+    cursor: pointer;
+    color: #333;
+    background: #fff;
+    border: 1px solid #ccc;
+    overflow: hidden;
+    display: inline-block;
+    /**display: inline;*/
+    *zoom: 1;
+}
+
+.upload  input {
+    position: absolute;
+    font-size: 100px;
+    right: 0;
+    top: 0;
+    opacity: 0;
+    filter: alpha(opacity=0);
+    cursor: pointer
+}
+
+.upload:hover {
+    color: #444;
+    background: #eee;
+    border-color: #ccc;
+    text-decoration: none
+}
+
+.second{
+    height: 178px;
 }
