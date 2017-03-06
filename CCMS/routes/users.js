@@ -11,4 +11,7 @@ router.get('/register', function(req, res, next) {
 router.get('/personal', function(req, res, next) {
     res.render("personal");
 });
+router.get('/association',function(req,res){
+    res.render('association');
+})
 module.exports = router;

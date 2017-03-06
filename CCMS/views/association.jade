@@ -1,2 +1,37 @@
 extends layout
 block content
+    div.container
+        // header
+        include templates/header
+        //content
+        div.content.row
+            div.container
+                //menu in left side
+                aside.leftBar.col-md-1
+                    ul.menuOfAss
+                        li.active
+                            a()
+                                span.glyphicon.glyphicon-home
+                        li
+                            a()
+                                span.glyphicon.glyphicon-user
+                        li
+                            a()
+                                span.glyphicon.glyphicon-bell
+                //the main viewer in right
+                div.viewer.col-md-11
+                    div.categoryTitle 基本信息
+                    div.assInfo
+                        div.row
+                            div.col-md-3
+                                span 社团名:
+                            div.col-md-3
+                                span 关键字:
+                        div.row
+                            div.col-md-3
+                                span 社团人数:
+                            div.col-md-3
+                                span 社团长:
+
+
+

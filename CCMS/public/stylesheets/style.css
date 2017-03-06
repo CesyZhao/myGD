@@ -167,3 +167,55 @@ footer{
 .second{
     height: 178px;
 }
+
+
+
+
+/*PAGE ASSOCIATION*/
+.leftBar{
+    border:1px solid #cccccc;
+    background: #fff;
+    padding: 0;
+}
+.menuOfAss{
+    padding-left: 0;
+    margin-bottom: 0;
+    font-size: 25px;
+}
+.menuOfAss li{
+    padding-left: 32px;
+    height: 180px;
+    line-height: 180px;
+}
+.menuOfAss li:hover{
+    background: #ccc;
+}
+.menuOfAss li:hover a{
+    color:#fff;
+}
+.menuOfAss li a{
+    color:#000;
+}
+.viewer{
+    padding: 10px 15px;
+    height: 542px;
+    border:1px solid #ccc;
+    border-left:none;
+}
+.categoryTitle{
+    height: 35px;
+    font-size: 20px;
+    line-height: 33px;
+    background: linear-gradient(left,#ccc,#fff,#fff);
+    background: -moz-linear-gradient(left,#ccc,#fff,#fff);
+
+}
+.categoryTitle:before{
+    content: '';
+    font-size: 29px;
+    border-left:4px solid #000;
+    margin-right: 5px;
+}
+.assInfo{
+    padding: 15px;
+}
