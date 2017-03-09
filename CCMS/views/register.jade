@@ -10,26 +10,42 @@ block content
                     h1 there will be your second home
                 div.col-md-3.register_form
                     //登录表单
+                    h2.text-center 注册
+                    div.msgBox
+                        div.alert.alert-danger.invisible
                     form
-                        h2.text-center 注册
                         div.form-group
                             div.input-group.form-item
                                 span.input-group-addon
                                     span.glyphicon.glyphicon-user
-                                input(class="form-control",type="text",name="loginUsername",placeholder="请输入用户名")
+                                input(class="form-control",type="text",name="registerUsername",placeholder="请输入用户名")
                         div.form-group
                             div.input-group.form-item
                                 span.input-group-addon
                                     span.glyphicon.glyphicon-lock
-                                input(class="form-control",type="password",name="loginPassword",placeholder="请输入密码")
+                                input(class="form-control",type="password",name="Password",placeholder="请输入密码")
                         div.form-group
-                            button.btn.btn-block.btn-default 登录
+                            div.input-group.form-item
+                                span.input-group-addon
+                                    span.glyphicon.glyphicon-lock
+                                input(class="form-control",type="password",name="rePassword",placeholder="请重复输入密码")
+                        div.form-group
+                            div.input-group.form-item
+                                span.input-group-addon
+                                    span.glyphicon.glyphicon-list-alt
+                                input(class="form-control",type="text",name="question",placeholder="请输入密保问题")
+                        div.form-group
+                            div.input-group.form-item
+                                span.input-group-addon
+                                    span.glyphicon.glyphicon-font
+                                input(class="form-control",type="text",name="answer",placeholder="请输入密保问题答案")
+                        div.form-group
+                            button.btn.btn-block.btn-default 注册
                         div.form-group
                             div.tips.col-md-9
-                                span 新来的？点击
+                                span 已有账号？点击
                                 a(href="") 这里
-                                span 注册
-                            div.tips.col-md-3
-                                a(href="") 忘记密码
+                                span 登录
 
         include templates/footer
+        script(type="text/javascript",src="/javascripts/uiRouter.js")

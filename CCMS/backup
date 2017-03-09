@@ -1,0 +1,6 @@
+-if (page == 'home')
+
+                    -else if(page == 'member')
+                        div.categoryTitle 成员信息
+                    -else if(page == 'announcement')
+                        div.categoryTitle 通知
