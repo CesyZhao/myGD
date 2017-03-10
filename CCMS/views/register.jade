@@ -13,17 +13,17 @@ block content
                     h2.text-center 注册
                     div.msgBox
                         div.alert.alert-danger.invisible
-                    form
+                    form(method="post",action="register")
                         div.form-group
                             div.input-group.form-item
                                 span.input-group-addon
                                     span.glyphicon.glyphicon-user
-                                input(class="form-control",type="text",name="registerUsername",placeholder="请输入用户名")
+                                input(class="form-control",type="text",name="username",placeholder="请输入用户名")
                         div.form-group
                             div.input-group.form-item
                                 span.input-group-addon
                                     span.glyphicon.glyphicon-lock
-                                input(class="form-control",type="password",name="Password",placeholder="请输入密码")
+                                input(class="form-control",type="password",name="password",placeholder="请输入密码")
                         div.form-group
                             div.input-group.form-item
                                 span.input-group-addon
@@ -48,4 +48,4 @@ block content
                                 span 登录
 
         include templates/footer
-        script(type="text/javascript",src="/javascripts/uiRouter.js")
+        script(type="text/javascript",src="/javascripts/index.js")

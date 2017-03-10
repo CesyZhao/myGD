@@ -6,11 +6,15 @@ block content
         include templates/header
         //用户面板
         div.jumbotron.userPanel
-            div.container
-                div.avatar_outer
-                    div.avatar_inner
-                        div.avatar
-                        p 你还没有登录，请先点击右上方按钮登录
+            -if(!user)
+                div.container
+                    div.avatar_outer
+                        div.avatar_inner
+                            div.avatar
+                            p 你还没有登录，请先点击右上方按钮登录
+            -else
+                div.container
+
         //新闻模块
         div.newsPanel.row
             div.container

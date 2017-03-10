@@ -4,3 +4,22 @@
                         div.categoryTitle 成员信息
                     -else if(page == 'announcement')
                         div.categoryTitle 通知
+
+
+
+/*pool.getConnection(function(err,connection){
+            if(!err){
+               connection.query("select * from users where username = ?",username,function(err,rows){
+                   if(!err){
+                       res.send(rows);
+                       res.end();
+                   }else{
+                       console.log(err);
+                   }
+                   connection.release();
+               });
+               // connection.destroy();
+            }else{
+                console.log(err);
+            }
+        })*/
