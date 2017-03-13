@@ -21,7 +21,7 @@ app.use(session({
   resave: false,
   saveUninitialized: true,
   cookie: {
-            maxAge : 60000
+            maxAge : 600000
   }
 }));
 app.use(favicon(path.join(__dirname, 'public/images', 'favicon.ico')));

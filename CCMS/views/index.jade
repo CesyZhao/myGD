@@ -10,10 +10,25 @@ block content
                 div.container
                     div.avatar_outer
                         div.avatar_inner
-                            div.avatar
+                            div.avatar.nologin
                             p 你还没有登录，请先点击右上方按钮登录
             -else
-                div.container
+                div.container.row.logined
+                    div.row.col-md-3
+                        div.avatar
+                    div.basicInfo.col-md-9
+                        div.row.infoRow
+                            div.col-md-3 用户名:#{user.username}
+                            div.col-md-3 真&nbsp;&nbsp;&nbsp;&nbsp;名:#{user.realname}
+                        div.row.infoRow
+                            div.col-md-3 性&nbsp;&nbsp;&nbsp;&nbsp;别:#{user.gender}
+                            div.col-md-3 年&nbsp;&nbsp;&nbsp;&nbsp;龄:#{user.age}
+                        div.row.infoRow
+                            div.col-md-12 个人介绍:#{user.description}
+                        div.row.infoRow
+                            div.col-md-12 我的社团:
+                                each item in ass
+                                    span  #{item.name}
 
         //新闻模块
         div.newsPanel.row

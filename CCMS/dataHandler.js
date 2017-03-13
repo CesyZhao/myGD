@@ -62,12 +62,35 @@ var database = {
         db.query(sql,[loginInfo.username,loginInfo.password],function(rows){
             if(rows.length != 0){
                 //查询到结果，将查询结果存入session
-                    req.session.user = rows[0];
+                    req.session.user = normalize(rows[0]);
                     res.redirect("/index?user_id="+req.session.user.id+"");
                 }
             }
         )
+    },
+    findAssociation : function(req,userId,callback){
+        console.log("userid:",userId);
+        var sql = "select name from association_info where id in (select a_id from association_user_info where u_id = ?)";
+        db.query(sql,userId,function(rows){
+            if(rows.length != 0){
+                console.log(rows);
+                callback(rows);
+               /* req.session.association = rows;
+                console.log("before:",req.session.association);*/
+            }
+        })
     }
 };
 //将模块暴露出去
+function normalize(obj){
+    var result = {} ;
+    for(var key in obj){
+        if(obj[key] == null){
+            result[key] = "未设置"
+        }else{
+            result[key] = obj[key];
+        }
+    }
+    return result;
+}
 module.exports = database;
