@@ -26,7 +26,8 @@ block content
                     div.panel.panel-default
                         div.panel-heading 用户名管理
                         div.panel-body.second
-                            div.form-group
+                            div.infoNow
+                                span 当前用户名: #{user.username}
                 //密码管理栏
                 div.col-md-3
                     div.panel.panel-default
@@ -37,6 +38,8 @@ block content
                     div.panel.panel-default
                         div.panel-heading 账号类型
                         div.panel-body.second
+                            div.infoNow
+                                span 账号类别: #{user.user_level}
         //详细信息栏
         div.realInfoPanel.panel.panel-default
             div.panel-heading

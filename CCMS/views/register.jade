@@ -12,8 +12,9 @@ block content
                     //登录表单
                     h2.text-center 注册
                     div.msgBox
-                        div.alert.alert-danger.invisible
-                    form(method="post",action="register")
+                        -if(error)
+                            div.alert.alert-danger #{error}
+                    form(method="post",action="checkRepeat")
                         div.form-group
                             div.input-group.form-item
                                 span.input-group-addon
@@ -48,4 +49,4 @@ block content
                                 span 登录
 
         include templates/footer
-        script(type="text/javascript",src="/javascripts/index.js")
+        //script(type="text/javascript",src="/javascripts/index.js")

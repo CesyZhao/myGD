@@ -8,6 +8,12 @@ nav.navbar.navbar-inverse
     ul.nav.navbar-nav.navbar-right
        li.dropdown
            a(class="dropdown-toggle glyphicon glyphicon-cog",data-toggle="dropdown")
-           ul.dropdown-menu
-               li
-                   a(href="users/login") login
+           -if(!user)
+               ul.dropdown-menu
+                   li
+                       a(href="users/toLogin") login
+           -else
+               ul.dropdown-menu
+                   li
+                       a(href="../users/toPersonal") 个人中心
+                       a(href="../users/logout") 登出

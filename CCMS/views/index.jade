@@ -14,15 +14,15 @@ block content
                             p 你还没有登录，请先点击右上方按钮登录
             -else
                 div.container.row.logined
-                    div.row.col-md-3
+                    div.row.col-md-6
                         div.avatar
-                    div.basicInfo.col-md-9
+                    div.basicInfo.col-md-6
                         div.row.infoRow
-                            div.col-md-3 用户名:#{user.username}
-                            div.col-md-3 真&nbsp;&nbsp;&nbsp;&nbsp;名:#{user.realname}
+                            div.col-md-4 用户名:#{user.username}
+                            div.col-md-4 真&nbsp;&nbsp;&nbsp;&nbsp;名:#{user.realname}
                         div.row.infoRow
-                            div.col-md-3 性&nbsp;&nbsp;&nbsp;&nbsp;别:#{user.gender}
-                            div.col-md-3 年&nbsp;&nbsp;&nbsp;&nbsp;龄:#{user.age}
+                            div.col-md-4 性&nbsp;&nbsp;&nbsp;&nbsp;别:#{user.gender}
+                            div.col-md-4 年&nbsp;&nbsp;&nbsp;&nbsp;龄:#{user.age}
                         div.row.infoRow
                             div.col-md-12 个人介绍:#{user.description}
                         div.row.infoRow
@@ -43,6 +43,8 @@ block content
                         li(data-target="#news_carousel", data-slide="0",class="active")
                 //新闻列表
                 div.news_list.col-md-3
+                    each item in news
+                        div #{item.title}
         //社团列表
         div.listPanel
             //第一行

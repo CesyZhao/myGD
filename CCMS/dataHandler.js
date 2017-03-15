@@ -36,53 +36,21 @@ var db = {
 };
 //各种需要使用的数据库操作封装
 var database = {
-    //用户名查重方法
-    checkRepeat : function(res,username){
-        //查询的sql语句
-        var sql = "select * from users where username = ?";
-        db.query(sql,username,function(rows){
-            res.send(rows);
-            res.end();
-        });
-    },
-    //注册方法
-    register : function(res,user){
-        //插入的sql语句
-        var sql = "insert into users(username,password,question,answer) values (?,?,?,?)";
-        db.query(sql,[user.username,user.password,user.question,user.answer],function(rows){
-            if(rows.affectedRows == 1){
-                //成功注册之后跳转至登录页面
-                res.redirect("toLogin");
-            }
-        })
-    },
-    //登录方法
-    login : function(req,res,loginInfo){
-        var sql = "select * from users where username = ? and password = ?";
-        db.query(sql,[loginInfo.username,loginInfo.password],function(rows){
-            if(rows.length != 0){
-                //查询到结果，将查询结果存入session
-                    req.session.user = normalize(rows[0]);
-                    res.redirect("/index?user_id="+req.session.user.id+"");
+    //操作数据库的方法
+    dataHandler : function(sql,data){
+                    //返回一个Promise对象
+                    return new Promise(function(resolve,reject){
+                        db.query(sql,data,function(rows){
+                            if(rows){
+                                //假如有数据，promise对象会进入 resolved 状态，将数据用 resolve()方法传给之后的方法
+                                resolve(rows);
+                            }
+                        })
+                    })
                 }
-            }
-        )
-    },
-    findAssociation : function(req,userId,callback){
-        console.log("userid:",userId);
-        var sql = "select name from association_info where id in (select a_id from association_user_info where u_id = ?)";
-        db.query(sql,userId,function(rows){
-            if(rows.length != 0){
-                console.log(rows);
-                callback(rows);
-               /* req.session.association = rows;
-                console.log("before:",req.session.association);*/
-            }
-        })
-    }
 };
-//将模块暴露出去
-function normalize(obj){
+module.exports = database;
+/*function normalize(obj){
     var result = {} ;
     for(var key in obj){
         if(obj[key] == null){
@@ -93,4 +61,5 @@ function normalize(obj){
     }
     return result;
 }
-module.exports = database;
+*/
+

@@ -23,3 +23,116 @@
                 console.log(err);
             }
         })*/
+
+
+  //promise进行异步调用处理，保证能够先获取值，再进行页面渲染
+ /* function getData(userid){
+    //返回一个promise对象，在内部方法执行成功时，.then方法调用里面的 onFulFilled方法，并且将执行成功后获得的值传递给 onFulFilled
+    return new Promise(function(resolve,reject){
+      //执行我们的获取值得函数，假如成功，那么将值传递给.then里面的方法
+      database.findAssociation(userid,function(rows){
+        if(rows){
+          resolve(rows);
+        }else{
+          reject()
+        }
+      });
+    });
+  }
+  getData(user.id).then(function onFulfilled(rows){
+    console.log(rows);
+    res.render('index', {
+      title: '大学生社团活动平台',
+      user:user,
+      ass:rows
+    });
+  });*/
+
+
+
+
+  function getData(userid){
+      //返回一个promise对象，在内部方法执行成功时，.then方法调用里面的 onFulFilled方法，并且将执行成功后获得的值传递给 onFulFilled
+      return new Promise(function(resolve,reject){
+        //执行我们的获取值得函数，假如成功，那么将值传递给.then里面的方法
+        database.findAssociation(userid,function(rows){
+          if(rows){
+            resolve(rows);
+          }else{
+            reject()
+          }
+        });
+      });
+    }
+    getData(user.id).then(function task2(value){
+      res.locals.ass = value;
+      return new Promise(function(resolve,reject){
+        //执行我们的获取值得函数，假如成功，那么将值传递给.then里面的方法
+        database.findNews(function(rows){
+          if(rows){
+            resolve(rows);
+          }else{
+            reject()
+          }
+        });
+      });
+    }).then(function task3(value){
+      console.log("value:",value);
+      res.locals.news = value;
+      res.render("index",{
+        title: '大学生社团活动平台',
+        user:user
+      })
+    })
+
+
+
+
+     //用户名查重方法
+        checkRepeat : function(res,username){
+            //查询的sql语句
+            var sql = "select * from users where username = ?";
+            db.query(sql,username,function(rows){
+                res.send(rows);
+                res.end();
+            });
+        },
+       //注册方法
+        register : function(res,user){
+            //插入的sql语句
+            var sql = "insert into users(username,password,question,answer) values (?,?,?,?)";
+            db.query(sql,[user.username,user.password,user.question,user.answer],function(rows){
+                if(rows.affectedRows == 1){
+                    //成功注册之后跳转至登录页面
+                    res.redirect("toLogin");
+                }
+            })
+        },
+        //登录方法
+        login : function(req,res,loginInfo){
+            var sql = "select * from users where username = ? and password = ?";
+            db.query(sql,[loginInfo.username,loginInfo.password],function(rows){
+                if(rows.length != 0){
+                    //查询到结果，将查询结果存入session
+                        req.session.user = rows[0];
+                        res.redirect("/index?user_id="+req.session.user.id+"");
+                    }
+                }
+            )
+        },
+        findAssociation : function(userId,callback){
+            var sql = "select name from association_info where id in (select a_id from association_user_info where u_id = ?)";
+            db.query(sql,userId,function(rows){
+                if(rows.length != 0){
+                    callback(rows);
+                }
+            })
+        },
+        findNews : function(callback){
+            var sql = "select * from news";
+            db.query(sql,"",function(rows){
+                if(rows.length!=0){
+                    callback(rows);
+                }
+            })
+        }
