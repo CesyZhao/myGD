@@ -1,7 +1,7 @@
 extends layout
 
 block content
-    div.container
+    div.container-fluid
         include templates/header
         //登录模块
         div.registerPanel
@@ -14,39 +14,45 @@ block content
                     div.msgBox
                         -if(error)
                             div.alert.alert-danger #{error}
-                    form(method="post",action="checkRepeat")
+                    form(method="post",action="register",class="form-horizontal")
                         div.form-group
-                            div.input-group.form-item
-                                span.input-group-addon
-                                    span.glyphicon.glyphicon-user
-                                input(class="form-control",type="text",name="username",placeholder="请输入用户名")
+                            label.control-label.col-md-4 用户名:
+                            div.form-item.col-md-8
+                                    input(class="form-control",type="text",name="username",placeholder="请输入用户名")
                         div.form-group
-                            div.input-group.form-item
-                                span.input-group-addon
-                                    span.glyphicon.glyphicon-lock
+                            label.control-label.col-md-4 密码:
+                            div.form-item.col-md-8
                                 input(class="form-control",type="password",name="password",placeholder="请输入密码")
                         div.form-group
-                            div.input-group.form-item
-                                span.input-group-addon
-                                    span.glyphicon.glyphicon-lock
+                            label.control-label.col-md-4 确认密码:
+                            div.form-item.col-md-8
                                 input(class="form-control",type="password",name="rePassword",placeholder="请重复输入密码")
                         div.form-group
-                            div.input-group.form-item
-                                span.input-group-addon
-                                    span.glyphicon.glyphicon-list-alt
+                            label.control-label.col-md-4 密保问题:
+                            div.form-item.col-md-8
                                 input(class="form-control",type="text",name="question",placeholder="请输入密保问题")
                         div.form-group
-                            div.input-group.form-item
-                                span.input-group-addon
-                                    span.glyphicon.glyphicon-font
-                                input(class="form-control",type="text",name="answer",placeholder="请输入密保问题答案")
+                            label.control-label.col-md-4 问题答案:
+                            div.form-item.col-md-8
+                               input(class="form-control",type="text",name="answer",placeholder="请输入密保问题答案")
                         div.form-group
-                            button.btn.btn-block.btn-default 注册
+                            label.control-label.col-md-4 性别:
+                            div.form-item.col-md-8
+                                div.radio.col-md-4
+                                    label
+                                        input(type="radio",name="gender",id="male",value="男")
+                                        span 男
+                                div.radio.col-md-3
+                                    label
+                                        input(type="radio",name="gender",id="female",value="女")
+                                        span 女
+                        div.form-group
+                            div.col-md-12
+                                button.btn.btn-block.btn-default 注册
                         div.form-group
                             div.tips.col-md-9
                                 span 已有账号？点击
-                                a(href="") 这里
+                                a(href="toLogin") 这里
                                 span 登录
 
         include templates/footer
-        //script(type="text/javascript",src="/javascripts/index.js")

@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var database = require('../dataHandler');
+var database = require('../midwares/dataHandler');
 var async = require('async');
 /* GET home page. */
 router.get('/index', function(req, res, next) {

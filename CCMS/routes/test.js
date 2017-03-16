@@ -3,7 +3,7 @@
  */
 var express = require('express');
 var router = express.Router();
-var database = require('../dataHandler');
+var database = require('../midwares/dataHandler');
 var async = require('async');
 router.get("/test",function(req,res){
     req.flash('error',"this is a test");

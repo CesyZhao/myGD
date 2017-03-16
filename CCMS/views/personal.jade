@@ -15,12 +15,14 @@ block content
                         div.panel-heading 头像管理
                         div.panel-body.second
                             div.avatar
-                            form(enctype="multipart")
+                                img(src="/images/#{user.avatar}")
+                            form(enctype="multipart/form-data",class="formAvatar",method="post",action="changeAvatar")
                                 //上传照片按钮
                                 div.form-group.text-center
                                     a(href="javascript:void(0)",class="upload")
-                                        input(type="file",name="file")
+                                        input(type="file",name="avatar")
                                         span 点击更换头像
+                                        input(type="hidden",value="#{user.id}",name='id')
                 //用户名栏
                 div.col-md-3
                     div.panel.panel-default
@@ -46,3 +48,4 @@ block content
                 h4 详细信息
             div.panel-body
         include templates/footer
+        script(type="text/javascript",src="/javascripts/index.js")
