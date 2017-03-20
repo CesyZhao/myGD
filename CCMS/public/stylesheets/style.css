@@ -204,8 +204,35 @@ footer{
 .second{
     height: 178px;
 }
+.username .userNameNow{
+    font-size: 60px;
+    color: lightblue;
+}
+.edit:hover{
+    cursor: pointer;
+}
+.opts{
+    margin-top: 45px;
+}
+.opts button{
+    border-radius: 0;
+}
+.userLevel{
+    color:lightblue;
+}
+.userLevel .infoNow{
+    font-size: 100px;
 
-
+}
+.userLevel .infoNow small{
+    font-size: 12px;
+}
+.realInfoPanel h4{
+    float: left;
+}
+.realInfoPanel button{
+    float: right;
+}
 
 
 /*PAGE ASSOCIATION*/

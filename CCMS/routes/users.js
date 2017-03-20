@@ -44,15 +44,21 @@ router.post("/register",function(req,res){
    /* database.register(res,req.body);*/
     var user = req.body;
     var sqlRegister = "insert into users(username,password,question,answer,gender) values(?,?,?,?,?)";
+    //先进行判空
+    console.log(user);
     checkEmpty.check(user)
+        //获取判空的结果
         .then(function(value){
+            //若判空结果为1，则验证用户名是否被占用
             if(value == 1){
                 checkUserName.check(user.username)
                     .then(function(value){
                         if(value.length == 1){
+                            //若用户名被占用，则抛出错误信息
                             req.flash('error','该用户名已经被占用!');
                             res.redirect('toRegister');
                         }else{
+                            //用户名可用则进行注册
                            database.dataHandler(sqlRegister,[user.username,user.password,user.question,user.answer,user.gender])
                                .then(function(value){
                                    if(value.affectedRows == 1){
@@ -63,6 +69,7 @@ router.post("/register",function(req,res){
                     })
             }
         })
+        //获取判空时抛出的异常
         .catch(function(error){
             req.flash('error',error.message);
             res.redirect('toRegister');
@@ -95,9 +102,30 @@ router.post("/changeAvatar",upload.single('avatar'),function(req,res){
     var sql = "update users set avatar = ? where id = ?";
     database.dataHandler(sql,[req.file.filename,req.body.id])
         .then(function(value){
-            if(value.effaffectedRows = 1){
-                req.session.user.avatar = req.file.filename;
-                res.redirect('toPersonal');
+            if(value.affectedRows == 1){
+                //req.session.user.avatar = req.file.filename;
+                database.reFreshUserInfo(req.session.user.id)
+                    .then(function(value){
+                        req.session.user  = value[0];
+                        res.redirect('toPersonal');
+                    });
+            }
+        })
+});
+router.post('/changeInfo',function(req,res){
+    var info = req.body;
+    var id= req.session.user.id;
+    console.log(req.body);
+    console.log(id);
+    var sql = 'update users set realname=?, age=?, gender=?, birthday=?, hobby=?, description=? where id=?';
+    database.dataHandler(sql,[info.realName,info.age,info.gender,info.birthday,info.hobby.toString(),info.description,id])
+        .then(function(value){
+            if(value.affectedRows == 1){
+                database.reFreshUserInfo(req.session.user.id)
+                    .then(function(value){
+                        req.session.user  = value[0];
+                        res.redirect('toPersonal');
+                    });
             }
         })
 });

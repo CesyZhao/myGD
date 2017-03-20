@@ -3,13 +3,13 @@
  */
 
 exports.check = function(inputs){
-    for(var key in inputs){
-        if(inputs[key] == ""){
-            return Promise.reject(new Error('您有信息未填写!'));
-        }else if(inputs.password != inputs.rePassword){
-            return Promise.reject(new Error('两次输入的密码不一致!'));
-        }else{
-            return Promise.resolve(1);
-        }
+    console.log(inputs);
+    if(inputs.username == '' || inputs.password == '' ||
+        inputs.rePassword == '' || inputs.question == '' || inputs.answer == ''){
+        return Promise.reject(new Error('您有信息未填写!'));
+    }else if(inputs.password != inputs.rePassword){
+        return Promise.reject(new Error('两次输入的密码不一致!'));
+    }else{
+        return Promise.resolve(1);
     }
 };

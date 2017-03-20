@@ -47,7 +47,17 @@ var database = {
                             }
                         })
                     })
-                }
+                },
+    reFreshUserInfo : function(id){
+                        return new Promise(function(resolve,reject){
+                            var sql = 'select * from users where id =?';
+                            db.query(sql,id,function(rows){
+                                if(rows){
+                                    resolve(rows);
+                                }
+                            })
+                        })
+    }
 };
 module.exports = database;
 /*function normalize(obj){
