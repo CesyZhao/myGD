@@ -48,6 +48,7 @@ var database = {
                         })
                     })
                 },
+    //获取新的用户信息
     reFreshUserInfo : function(id){
                         return new Promise(function(resolve,reject){
                             var sql = 'select * from users where id =?';
@@ -57,7 +58,7 @@ var database = {
                                 }
                             })
                         })
-    }
+                }
 };
 module.exports = database;
 /*function normalize(obj){

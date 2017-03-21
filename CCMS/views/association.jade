@@ -1,27 +1,95 @@
 extends layout
 block content
-    div.container
+    div.container-fluid
         // header
         include templates/header
         //content
         div.content.row
-            div.container
+            div.container-fluid
                 //menu in left side
                 aside.leftBar.col-md-1
                     ul.menuOfAss
                         li
                             a(href="javascript:void(0)")
                                 span.glyphicon.glyphicon-home
+                                span 社团信息
                         li
                             a(href="javascript:void(0)")
                                 span.glyphicon.glyphicon-user
+                                span 成员信息
                         li
                             a(href="javascript:void(0)")
                                 span.glyphicon.glyphicon-bell
+                                span 通知信息
                 //the main viewer in right
                 div.viewer.col-md-11
-                    article
-                        div
+                    div.assInfo_box
+                        article
+                            header.categoryTitle 社团信息
+                            section
+                                each item in ass_info
+                                    div.row
+                                        span.col-md-1.text-right 社团名:
+                                        span.col-md-4 #{item.name}
+                                    div.row
+                                        span.col-md-1.text-right 关键字:
+                                        span.col-md-4 #{item.keyword}
+                                    div.row
+                                        span.col-md-1.text-right 社团长:
+                                        span.col-md-4 #{item.leader}
+                                    div.row
+                                        span.col-md-1.text-right 成立时间:
+                                        span.col-md-4 #{item.founddate.toLocaleDateString()}
+                                    div.row
+                                        span.col-md-1.text-right 社团简介:
+                                        span.col-md-10 #{item.description}
+                                    div.row
+                                        span.col-md-1.text-right 社团徽章:
+                                        div.avatar.association
+                                            img(src="/images/#{item.avatar}")
+                    div.assInfo_box.active
+                        article
+                            header.categoryTitle 通知信息
+                            section
+                                table.table.table-responsive.table-hover
+                                    thead
+                                        th #
+                                        th username
+                                        th realname
+                                        th gender
+                                        th age
+                                        th birthday
+                                        th hobby
+                                    tbody
+                                        each item,index in ass_members
+                                            tr
+                                                td #{index+1}
+                                                td #{item.username}
+                                                td #{item.realname}
+                                                td #{item.gender}
+                                                td #{item.age}
+                                                td #{item.birthday}
+                                                td #{item.hobby}
+                    div.assInfo_box.active
+                        article
+                            header.categoryTitle 成员信息
+                            section
+                                table.table.table-responsive.table-hover
+                                    thead
+                                        th #
+                                        th title
+                                        th date
+                                        th author
+                                        th operation
+                                    tbody
+                                        each item,index in ass_notifes
+                                            tr
+                                                td #{index + 1}
+                                                td #{item.title}
+                                                td #{item.date.toLocaleDateString()}
+                                                td #{item.author}
+                                                td
+                                                      span.glyphicon.glyphicon-eye-open
     script(type="text/javascript",src="/javascripts/index.js")
 
 

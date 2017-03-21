@@ -12,8 +12,13 @@ nav.navbar.navbar-inverse
                ul.dropdown-menu
                    li
                        a(href="users/toLogin") login
-           -else
+           -else if(title == '主页')
                ul.dropdown-menu
                    li
                        a(href="../users/toPersonal") 个人中心
                        a(href="../users/logout") 登出
+           -else
+               ul.dropdown-menu
+                   li
+                       a(href="toPersonal") 个人中心
+                       a(href="logout") 登出

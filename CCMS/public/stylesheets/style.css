@@ -72,6 +72,9 @@ footer{
     overflow: hidden;
     margin: 0 auto 10px auto;
 }
+.avatar.association{
+    margin: 0;
+}
 .avatar img{
     width: 100%;
     height: 100%;
@@ -99,7 +102,6 @@ footer{
 }
 .news_list{
     height:400px;
-    background: #ccc;
 }
 /*LIST PANEL*/
 .listPanel{
@@ -108,7 +110,9 @@ footer{
 .item img{
     height: 200px;
 }
-
+.pagePanel{
+    
+}
 /*PAGE LOGIN*/
 .loginPanel,.registerPanel{
     padding: 50px 30px;
@@ -211,8 +215,11 @@ footer{
 .edit:hover{
     cursor: pointer;
 }
+.oldName{
+    line-height: 30px;
+}
 .opts{
-    margin-top: 45px;
+    margin-top: -20px;
 }
 .opts button{
     border-radius: 0;
@@ -237,6 +244,7 @@ footer{
 
 /*PAGE ASSOCIATION*/
 .leftBar{
+    height: 542px;
     border:1px solid #cccccc;
     background: #fff;
     padding: 0;
@@ -244,12 +252,11 @@ footer{
 .menuOfAss{
     padding-left: 0;
     margin-bottom: 0;
-    font-size: 25px;
 }
 .menuOfAss li{
-    padding-left: 32px;
-    height: 180px;
-    line-height: 180px;
+    text-align: center;
+    height: 30px;
+    line-height: 30px;
 }
 .menuOfAss li.active{
     background: #ddd;
@@ -275,18 +282,31 @@ footer{
 .categoryTitle{
     height: 35px;
     font-size: 20px;
-    line-height: 33px;
-    background: linear-gradient(left,#ccc,#fff,#fff);
-    background: -moz-linear-gradient(left,#ccc,#fff,#fff);
-
+    line-height: 32px;
+    background: linear-gradient(left,#ccc,#fff,#fff,#fff);
+    background: -moz-linear-gradient(left,#ccc,#fff,#fff,#fff);
+    background: -webkit-linear-gradient(left,#ccc,#fff,#fff,#fff);
 }
 .categoryTitle:before{
     content: '';
     font-size: 29px;
+    line-height: 35px;
     border-left:4px solid #000;
     margin-right: 5px;
 }
 .assInfo{
     padding: 15px;
     font-size: 15px;
+}
+.assInfo_box{
+    display: none;
+}
+.assInfo_box.active{
+    display: block;
+}
+.assInfo_box{
+    font-size: 15px;
+}
+.assInfo_box .row{
+    margin-top: 10px;
 }
