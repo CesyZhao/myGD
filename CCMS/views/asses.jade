@@ -1,0 +1,62 @@
+extends layout
+block content
+    div
+        include templates/header
+        article.row.container-fluid.contents
+            section
+                aside.leftBar.col-md-1
+                    div.panel-group.text-center#accordion(aria-multiselectable="true")
+                        div.panel.panel-default
+                            div.panel-heading
+                                a(data-toggle='collapse',data-parent='#accordion',href='#menuOne',aria-expanded="true",aria-controls="collapseOne")
+                                    span.glyphicon.glyphicon-menu-hamburger
+                                    span 社团信息
+                            div(class="panel-collapse collapse #{collapse == 'menuOne'?'in':''}")#menuOne
+                                div.panel-body
+                                    ul.secMenu
+                                        li(class="#{status == 'description'?'active':''}")
+                                            a(href='./toCenter?id=#{ass_info_id}') 社团简介
+                                        li(class="#{status == 'members'?'active':''}")
+                                            a(href='./toMembers?id=#{ass_info_id}') 社团成员
+                        div.panel.panel-default
+                            div.panel-heading
+                                a(data-toggle='collapse',data-parent='#accordion',href='#menuTwo',aria-expanded="true",aria-controls="collapseOne")
+                                    span.glyphicon.glyphicon-user
+                                    span 活动中心
+                            div(class="panel-collapse collapse #{collapse == 'menuTwo' ? 'in' : ''}")#menuTwo
+                                div.panel-body
+                                    ul.secMenu
+                                        li(class="#{status == 'message' ? 'active' : ''}")
+                                            a(href='./toMessager') 留言板
+                        div.panel.panel-default
+                            div.panel-heading
+                                a(data-toggle='collapse',data-parent='#accordion',href='#menuThree',aria-expanded="true",aria-controls="collapseOne")
+                                    span.glyphicon.glyphicon-bell
+                                    span 通知中心
+                            div(class="panel-collapse collapse #{collapse == 'menuThree'?'in':''}")#menuThree
+                                div.panel-body
+                                    ul.secMenu
+                                        li(class="#{status == 'toMyApply'?'active':''}")
+                                            a(href='/personal/toMyApply') 社团通知
+                        -if(userLevel)
+                            div.panel.panel-default
+                                div.panel-heading
+                                    a(data-toggle='collapse',data-parent='#accordion',href='#menuFour',aria-expanded="true",aria-controls="collapseOne")
+                                        span.glyphicon.glyphicon-cog
+                                        span 社团管理
+                                div(class="panel-collapse collapse #{collapse == 'menuFour' ? 'in' : ''}")#menuFour
+                                    div.panel-body
+                                        ul.secMenu
+                                            li(class="#{status == 'toNews' ? 'active' : ''}")
+                                                a(href='/admin/toNews') 更改简介
+                                            li(class="#{status == 'toAssApply' ? 'active' : ''}")
+                                                a(href='/admin/toAssApply') 权限管理
+                                            li(class="#{status == 'toActApply' ? 'active' : ''}")
+                                                a(href='/admin/toActApply') 社团公告
+                        div.panel.panel-default
+                            div.panel-heading
+                                a(href='../../index')
+                                    span.glyphicon.glyphicon-log-out
+                                    span 回到主页
+            section
+                block contents

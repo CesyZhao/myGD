@@ -1,5 +1,24 @@
 body {
     font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+
+    background: -webkit-linear-gradient(left, #53e3a6 0%, #50a3a2 50%,#53e3a6 100%);
+}
+body.transparent{
+    height: auto;
+    background:#50a3a2 url('/images/bg1.jpg') no-repeat;
+    background-size: 100%;
+}
+.with-corner{
+    width: 100px;
+    height: 112px;
+    line-height: 112px;
+    color:#fff;
+    font-weight: bolder;
+    background: url('/images/corner.png') no-repeat;
+}
+.ass_avatar img{
+    width: 110px;
+    height:110px;
 }
 /*FONT*/
 @font-face {
@@ -9,16 +28,30 @@ body {
 a {
     color: #00B7FF;
 }
+.fluid{
+    padding: 0;
+}
 /*TEMPLATES*/
 /*HEADER*/
 .navbar-inverse{
     border-radius: 0;
     margin-bottom: 0px;
+    border:none;
+    padding: 15px;
+    background: rgba(255,255,255,.3);
 }
 .navbar-inverse .navbar-brand{
+
     font-family: "Tideway";
     font-size: 30px;
     color: #fff;
+}
+.navbar-brand{
+    height: auto;
+    padding: 0;
+}
+.navbar-brand>img{
+    height: 50px;
 }
 .nav.navbar-nav>li>a{
     color: #fff;
@@ -26,21 +59,24 @@ a {
 .nav.navbar-nav>li>a:hover{
     cursor: pointer;
 }
-cite{
-    vertical-align: middle;
-    padding-top: 40px;
-    text-indent: 10px;
-    font-family: "Tideway";
-    font-size: 25px;
-    color: #fff;
-  }
+.animation span:nth-child(1){
+
+}
 /*FOOTER*/
 footer{
-    height: 100px;
-    background: #000;
+    height: 74px;
+    padding: 30px;
+    background: transparent;
+    color:#fff;
 }
 
-
+.table th, .table td {
+    text-align: center;
+    vertical-align: middle!important;
+}
+.btn{
+    margin-right: 8px;
+}
 
 
 
@@ -48,10 +84,53 @@ footer{
 
 /*PAGE INDEX*/
 /*USER PANEL*/
+.ass{
+    height: 300px;
+    overflow: hidden;
+}
+.ass:hover{
+    cursor: pointer;
+}
+.ass:hover .hiddenOpts{
+    margin-top: -290px;
+}
+.hiddenOpts{
+    background: rgba(0,0,0,.4);
+    margin-top: 10px;
+    height: 300px;
+    padding: 140px 25px;
+    transition: .2s linear;
+}
+.userInfo{
+    width: 110px;
+    color:#fff;
+}
+.userInfo a.smallAvatar{
+    padding-top: 10px;
+}
+.userInfo a.smallAvatar img:hover{
+    box-shadow: 0 0 5px 5px lightblue;
+}
+.userInfo span{
+  position: relative;
+    top:5px;
+}
+.smallAvatar img{
+    float: left;
+    height: 30px;
+    width: 30px;
+    border-radius: 100%;
+    margin-right: 10px;
+}
+.jumbotron{
+    background: transparent;
+    color:#fff;
+}
 .jumbotron.userPanel{
     border-radius: 0px;
     padding: 10px;
     margin-bottom: 0px;
+
 }
 .avatar_outer{
     margin-left: 350px;
@@ -64,6 +143,9 @@ footer{
 }
 .avatar_inner p{
     color:#aaa;
+}
+.avatar_inner p small{
+    font-size: 14px;
 }
 .avatar{
     width: 100px;
@@ -96,12 +178,75 @@ footer{
     margin-top: 5px;
 }
 /*NEWS PANEL*/
-.news_carousel{
-    height: 400px;
-    background: #000;
+.news:hover{
+    cursor: pointer;
 }
 .news_list{
-    height:400px;
+    position: relative;
+    top:-37px;
+    background: #fff;
+}
+.news_carousel{
+    height: 455px;
+    padding: 0;
+}
+.news_list{
+    padding: 0;
+    border-radius: 10px;
+    box-shadow: 0 0 10px 5px #ccc;
+}
+.carousel-caption {
+    top:100px;
+}
+.carousel-indicators{
+    bottom: 40px;
+}
+.news_carousel .carousel-inner>.item img{
+    width: 100%;
+    height: 455px;
+}
+.header_content{
+    width: 50%;
+}
+table{
+    table-layout:fixed;
+}
+td{
+    /*width: 50%;*/
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+ }
+td.news_Content1{
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+.devider{
+    height: 40px;
+    /*background: #fff;*/
+}
+.middevider{
+    font-size: 20px;
+    line-height: 40px;
+}
+.leftdevider,.rightdevider{
+    margin-top: 19px;
+    height: 1px;
+    background: #000;
+}
+.search{
+    height: 50px;
+}
+.search .row a{
+    margin-left: 10px;
+    padding: 5px;
+    border-radius: 5px;
+    color:#2b669a;
+}
+.search .row a.active{
+    background:#2b669a ;
+    color:#000;
 }
 /*LIST PANEL*/
 .listPanel{
@@ -113,22 +258,37 @@ footer{
 .pagePanel{
     
 }
+
 /*PAGE LOGIN*/
 .loginPanel,.registerPanel{
     padding: 50px 30px;
-    background: #cccccc;
+
 }
-.info,.login_form,.register_form{
+.info,.register_form{
+    border-radius: 10px;
     height: 420px;
+    border-radius:5px;
 }
 .login_form{
-    padding-top: 70px;
-    background: #fff;
+    margin-top: 60px;
+    border-radius: 10px;
+}
+.login_form h3{
+    margin-top: 5px;
+}
+.login_form,.register_form{
+    box-shadow: 0 0 5px 5px lightblue;
+    /*background: rgba(255,255,255,.7);*/
+}
+.login_form{
+    padding-top: 10px;
+
 }
 .form-item.focus{
     box-shadow: 0 0 5px 5px blue;
 }
 .tips{
+    color:#fff;
     padding-left: 0;
     padding-right: 0;
 }
@@ -152,6 +312,17 @@ footer{
     display: none;
 }
 /*PAGE PERSONAL*/
+.box{
+    padding: 25px;
+}
+.detials{
+    display: block;
+}
+.content{
+    position: relative;
+    height: 562px;
+    padding: 15px 0px 15px 60px;
+}
 .title,.accountInfoPanel,.realInfoPanel{
     border-radius: 0;
     margin-bottom: 0;
@@ -165,6 +336,20 @@ footer{
 .title h3{
     margin-top: 0px;
 }
+.categories{
+    height: 60px;
+}
+.category{
+    height: 70px;
+    text-align: center;
+}
+.cateIcon{
+    height: 30px;
+    width: 30px;
+    margin: 2px auto ;
+    border-radius: 100%;
+    font-size: 30px;
+}
 .avatarPanel{
 
 }
@@ -177,7 +362,8 @@ footer{
     float: left;
     padding: 6px 12px;
     position: relative;
-    left: 25%;
+    top:20px;
+    left:32%;
     cursor: pointer;
     color: #333;
     background: #fff;
@@ -204,14 +390,19 @@ footer{
     border-color: #ccc;
     text-decoration: none
 }
-
-.second{
-    height: 178px;
+.detials{
+    margin-top: 5px;
 }
-.username .userNameNow{
-    font-size: 60px;
+.second{
+    height: 208px;
+}
+ .name{
+    font-size: 40px;
     color: lightblue;
 }
+ .pwd{
+     font-size: 20px;
+ }
 .edit:hover{
     cursor: pointer;
 }
@@ -219,9 +410,9 @@ footer{
     line-height: 30px;
 }
 .opts{
-    margin-top: -20px;
+    margin-top: 50px;
 }
-.opts button{
+.opts button,.save button{
     border-radius: 0;
 }
 .userLevel{
@@ -240,35 +431,66 @@ footer{
 .realInfoPanel button{
     float: right;
 }
+.adminPanel{
+    height: 100px;
+    background: #ccc;
+}
+.options{
+    position: absolute;
+    bottom:20px;
+}
+aside.leftBar a{
+    color:#000;
+}
+ul.secMenu{
+    padding-left: 0;
+    font-size: 12px;
+}
+ul.secMenu li{
+    text-align:center;
+}
+.collapse ul li.active{
+    background: #000;
 
-
+}.contents{
+    margin-right:0px;
+ }
+.collapse ul li.active a{
+    color:#fff;
+}
+.passForm{
+    display: inline;
+}
 /*PAGE ASSOCIATION*/
 .leftBar{
-    height: 542px;
-    border:1px solid #cccccc;
-    background: #fff;
-    padding: 0;
+    width: 12%;
+    height: 562px;
+    padding:40px 15px 0 15px;
+    background: rgba(255,255,255,.4);
 }
 .menuOfAss{
     padding-left: 0;
     margin-bottom: 0;
 }
 .menuOfAss li{
-    text-align: center;
-    height: 30px;
-    line-height: 30px;
+    /*text-align: center;*/
+    /*height: 50px;*/
+    line-height: 50px;
 }
 .menuOfAss li.active{
     background: #ddd;
+}
+.menuOfAss li a{
+    margin-left: 15px;
 }
 .menuOfAss li.active a{
     color:#fff;
 }
 .menuOfAss li:hover{
-    background: #ccc;
+   /* background: #ccc;*/
 }
 .menuOfAss li:hover a{
-    color:#fff;
+    /*color:#fff;*/
 }
 .menuOfAss li a{
     color:#000;
@@ -309,4 +531,12 @@ footer{
 }
 .assInfo_box .row{
     margin-top: 10px;
+}
+.messageBox{
+    height: 500px;
+    overflow: auto;
+    background: #fff;
+}
+.textBox{
+    height: 50px;
 }

@@ -1,0 +1,40 @@
+extends ../../personales
+block contents
+    div.content.col-md-10
+        div.row.box
+            div.search.row
+                div.col-md-6
+                    div.row
+                        div.col-md-12.choice
+                            span 种类:
+                            a(href='toMyManAss#listPanel',class="#{category ? '' : 'active'}") 全部
+                            a(href="toMyManAss?category=sports#listPanel",class="#{category == 'sports' ? 'active' : ''}") 运动
+                            a(href="toMyManAss?category=music#listPanel",class="#{category == 'music' ? 'active' : ''}") 音乐
+                            a(href="toMyManAss?category=art#listPanel",class="#{category == 'art' ? 'active' : ''}") 艺术
+                            a(href="toMyManAss?category=literary#listPanel",class="#{category == 'literary' ? 'active' : ''}") 文艺
+                            a(href="toMyManAss?category=carton#listPanel",class="#{category == 'carton' ? 'active' : ''}") 二次元
+            div.row
+                each item in adminass
+                    div.item.col-md-3
+                        div.thumbnail
+                            img(src='../../images/ass_avatar/#{item.avatar}')
+                            div.caption
+                                h3 #{item.name}
+                                p #{item.keyword}
+                                p
+                                    a.btn.btn-default.btn-sm 查看主页
+            -if(adminass.length!=0)
+                nav.pagePanel.col-md-6.col-md-offset-3.text-center
+                    ul.pagination
+                        li
+                            a
+                                span &laquo;
+                        -for(var i=1; i<=pagesAdminAss; i++)
+                            li
+                                -if(category)
+                                    a(href='toMyManAss?page=' + i + '&category=' + category + '#listPanel') #{i}
+                                -else
+                                    a(href='toMyManAss?page=' + i + '#listPanel') #{i}
+                        li
+                            a
+                                span &raquo;

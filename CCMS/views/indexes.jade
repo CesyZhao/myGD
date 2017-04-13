@@ -1,0 +1,182 @@
+extends layout
+
+block content
+        //导航
+        include templates/header
+        //新闻模块
+        div.newsPanel.row.contents
+            //新闻图片轮播
+            div(class="news_carousel col-md-12 carousel slide ",id="news_carousel",data-ride="carousel")
+                ol.carousel-indicators
+                    -for(var i=0; i<hotNews.length;i++)
+                        li(data-target="#news_carousel",data-slide-to=i,class=i==0?'active':'normal')
+                div.carousel-inner
+                    each item,index in hotNews
+                        div(class="item #{index == 0?'active':'not'}")
+                            img(src='src="../../images/picture/#{item.picture}')
+                            div.carousel-caption
+                                h1 #{item.title}
+                                p #{item.content}
+                //controls
+                a.left.carousel-control(href='#news_carousel',data-slide='prev')
+                    span.glyphicon.glyphicon-chevron-left
+                a.right.carousel-control(href='#news_carousel',data-slide='next')
+                    span.glyphicon.glyphicon-chevron-right
+            //新闻列表
+            div.news_list.col-md-10.col-md-offset-1#news_list
+                h3.text-center 新闻列表
+                table.table.table-responsive.table-hover
+                    thead
+                        th 标题
+                        th.header_content 内容
+                        th 发布时间
+
+                    tbody
+                        each item in news
+                            tr.news
+                                td.news_title #{item.title}
+                                td.news_content #{item.content}
+                                td.news_date #{item.date.toLocaleDateString()}
+                nav.pagePanel.col-md-6.col-md-offset-3.text-center
+                    ul.pagination
+                        li
+                            a
+                                span &laquo;
+                        -for(var i=1; i<=newsPages; i++)
+                            li
+                                a(href='index?newsPage=' + i + '#news_list') #{i}
+                        li
+                            a
+                                span &raquo;
+        div.modal.fade#newsModal
+            div.modal-dialog
+                div.modal-content
+                    div.modal-header
+                        h3.text-center 详细内容
+                    div.modal-body
+                       div.row
+                           div.col-md-3.text-center
+                               h4 新闻标题:
+                           h4.col-md-8
+                        div.row
+                            div.col-md-3.text-center
+                                h4 新闻内容:
+                            h4.col-md-8
+                    div.modal-footer
+                        button.btn.btn-primary(data-dismiss='modal') 关闭
+
+            //社团列表
+        div.row.contents
+            div.devider.col-md-10.col-md-offset-1.fluid
+                div.col-md-4.leftdevider
+                div.col-md-4.middevider.text-center 社团列表
+                div.col-md-4.rightdevider
+            div.listPanel.col-md-10.col-md-offset-1.fluid#listPanel
+                    div.search.row
+                        div.col-md-6
+                            div.row
+                                div.col-md-12.choice
+                                    span 种类:
+                                    a(href='index#listPanel',class="#{category?'':'active'}") 全部
+                                    a(href="index?category=sports#listPanel",class="#{category=='sports'?'active':''}") 运动
+                                    a(href="index?category=music#listPanel",class="#{category=='music'?'active':''}") 音乐
+                                    a(href="index?category=art#listPanel",class="#{category=='art'?'active':''}") 艺术
+                                    a(href="index?category=literary#listPanel",class="#{category=='literary'?'active':''}") 文艺
+                                    a(href="index?category=carton#listPanel",class="#{category=='carton'?'active':''}") 二次元
+                        div.col-md-6
+                            form.form-horizontal(method='get',action='index#listPanel')
+                                div.form-group
+                                    label.col-md-6
+                                    div.col-md-4
+                                        input(type='text',name='searchWords',class='form-control',placeholder='请输入查询内容')
+                                    div.col-md-1
+                                        button.btn.btn-primary 查询
+
+                    //第一行
+                    div.row
+                        -if(asses.length!=0)
+                            each item in asses
+                                div.item.col-md-3
+                                    div.thumbnail.ass
+                                        img(src='../../images/ass_avatar/#{item.avatar}')
+                                        div.caption.row
+                                            div.col-md-12
+                                                h3 #{item.name}
+                                            div.col-md-4
+                                                span.text-left #{item.keyword}
+                                            div.col-md-4.col-md-offset-4
+                                                span.text-right #{item.memberCount}人
+                                            div.hiddenOpts.col-md-12
+                                                -if(user.username)
+                                                    div.col-md-6
+                                                        a(href='association/toCenter?id=#{item.id}',class='btn btn-default btn-sm') 社团中心
+                                                    div.col-md-6
+                                                        a(href='',class='btn btn-primary btn-sm') 申请加入
+                                                -else
+                                                    div.col-md-12.text-center
+                                                        a(href='association/toCenter?id=#{item.id}',class='btn btn-default btn-sm') 社团中心
+                        -else
+                            div.col-md-12.text-center
+                                h3  阿偶，好像现在还没有你想找的社团，点击下方链接创建吧!
+                                        //p
+                                        //    a(href='../users/association/#{item.id}').btn.btn-default.btn-sm 查看主页
+                                        //    a.btn.btn-primary.btn-sm 申请加入
+
+                    div.row
+                        -if(asses.length!=0)
+                            nav.pagePanel.col-md-6.col-md-offset-3.text-center
+                                ul.pagination
+                                    li
+                                        a
+                                            span &laquo;
+                                    -for(var i=1; i<=pages; i++)
+                                        li
+                                            -if(category)
+                                                a(href='index?page='+i+'&category='+category+'#listPanel') #{i}
+                                            -else
+                                                a(href='index?page='+i+'#listPanel') #{i}
+                                    li
+                                        a
+                                            span &raquo;
+                        span 没有找到你想要的社团？点击
+                            a(data-toggle='modal',data-target='#a_apply') 这里
+                        span 创建你自己的社团
+                        div.msgBox.col-md-4.col-md-offset-8
+                            -if(error)
+                                //div.alert.alert-danger.text-center #{error}
+                                script.
+                                    swal('申请失败!','该关键字的社团已经存在!','error');
+                            -else if(success)
+                                //div.alert.alert-success.text-center #{success}
+                                script.
+                                    swal('申请已经提交!', '你可以到个人中心查看审核结果!', 'success');
+                    div(class='modal fade',id='a_apply')
+                        div.modal-dialog
+                            div.modal-content
+                                div.modal-header
+                                    h4 申请创建社团
+                                div.modal-body
+                                    form.form-horizontal(action='/users/applyNew',method='post',id='applyForm')
+                                        div.form-group
+                                            label.control-label.col-md-2 社团名称:
+                                            div.col-md-8
+                                                input(type='text',name='name',placeholder='请输入你想创建的社团名称',class='form-control')
+                                        div.form-group
+                                            label.control-label.col-md-2 种类:
+                                            div.col-md-8
+                                                select.form-control(name='category')
+                                                    option(value='sports') 运动
+                                                    option(value='art') 艺术
+                                                    option(value='music') 音乐
+                                                    option(value='carton') 二次元
+                                                    option(value='literary') 文艺
+                                        div.form-group
+                                            label.control-label.col-md-2 关键字:
+                                            div.col-md-8
+                                                input(type='text',name='keyword',placeholder='请填写该社团的关键字',class='form-control')
+                                div.modal-footer
+                                    button.btn.btn-sm.btn-default(data-dismiss='modal') 关闭
+                                    button.btn.btn-sm.btn-primary(form='applyForm') 申请
+
+        //页尾
+        include templates/footer

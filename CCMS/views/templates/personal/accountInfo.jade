@@ -1,0 +1,88 @@
+extends ../../personales
+block contents
+    div.col-md-10
+        div.accountInfoPanel
+            //div.categoryTitle 账号信息
+                //头像栏
+            div.box.row
+                div.col-md-4.col-md-offset-3
+                    div.panel.panel-default
+                        div.panel-heading 头像管理
+                        div.panel-body.second
+                            div.avatar
+                                img(src="../../images/avatar/#{user.avatar}")
+                            form(enctype="multipart/form-data",class="formAvatar",method="post",action="/personal/changeAvatar")
+                                //上传照片按钮
+                                div.form-group.text-center
+                                    a(href="javascript:void(0)",class="upload")
+                                        input(type="file",name="avatar")
+                                        span 点击更换头像
+                                        input(type="hidden",value="#{user.id}",name='id')
+                            -if(success == '更改头像成功!')
+                                script.
+                                    swal('更改用户头像成功!','', 'success')
+                            -else if(error == '更改头像失败')
+                                script.
+                                    swal('更改用户头像失败!','很遗憾，头像更换失败，请重试!','error')
+                //用户名栏
+                div.col-md-4
+                    div.panel.panel-default.username
+                        div.panel-heading 用户名管理
+                        div.panel-body.second.text-center
+                            form(class='infoNow form-horizontal',method='post',action='/personal/changeUserName')
+                                div.form-group
+                                    label.control-label.col-md-5 当前用户名:
+                                    div.col-md-7
+                                        div.bg-warning
+                                            span.oldName #{user.username}
+                                div.form-group
+                                    label.control-label.col-md-5 更改用户名:
+                                    div.col-md-7
+                                        input(type='text',class='form-control',name='username')
+                                -if(error == '该用户名被占用!')
+                                    script.
+                                        swal('更改用户名失败!','该用户名已经被占用!','error')
+                                -else if(success == '用户名修改成功!')
+                                    script.
+                                        swal('更改用户名成功!','', 'success')
+                                div.opts.row
+                                    div.col-md-4.col-md-offset-4
+                                        button.btn.btn-default.btn-block 保存
+
+
+                //密码管理栏
+                div.col-md-4.col-md-offset-3
+                    div.panel.panel-default
+                        div.panel-heading 密码管理
+                        div.panel-body.second
+                            form(method='post',action='changePassword',class='form-horizontal')
+                                div.form-group
+                                    label.col-md-4.control-label 密保问题:
+                                    div.col-md-7
+                                        div.bg-warning.text-center
+                                            span.oldName #{user.question}
+                                div.form-group
+                                    label.col-md-4.control-label 问题答案:
+                                    div.col-md-7
+                                        input(type='text',class='form-control',name='answer')
+                                div.form-group
+                                    label.col-md-4.control-label 新的密码:
+                                    div.col-md-7
+                                        input(type='password',class='form-control',name='password')
+                                div.form-group
+                                    div.col-md-4.col-md-offset-4.save
+                                        button.btn.btn-default.btn-block 更改
+                                -if(error1 == '密保问题回答错误!')
+                                    script.
+                                        swal('密码更改失败!','密保问题答案错误!','error')
+                                -else if(success1 == '密码更改成功!')
+                                    script.
+                                        swal('密码更改成功!','','success')
+
+                //账号类型栏
+                div.col-md-4
+                    div.panel.panel-default.userLevel
+                        div.panel-heading 账号类型
+                        div.panel-body.second.text-center
+                            div.infoNow #{user.user_level}
+                            small #{user.user_level == 'A' ? '管理员用户' : '普通用户'}

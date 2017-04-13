@@ -1,0 +1,106 @@
+extends ../personales
+block contents
+    div.content.col-md-11
+        div.row
+            div.col-md-12
+                //标签页  即tabs 选项卡
+                ul.nav.nav-pills
+                    li.active
+                        a(href="#news",data-toggle='tab') 发布新闻
+                    li
+                        a(href="#ass",data-toggle='tab') 社团审批
+                    li
+                        a(href="#act",data-toggle='tab') 活动审批
+
+                //内容
+                div.row.box
+                    //选项卡内容
+                    div.tab-content
+                        //选项卡内容一  审核创建社团的申请
+                        div.tab-pane#ass
+                            table.table.table-hover.table-bordered
+                                thead.text-center
+                                    th 选项
+                                    th 社团名
+                                    th 关键字
+                                    th 申请者
+                                    th 审核状态
+                                    th 操作
+                                tbody
+                                    each item in admin[0]
+                                        tr.tr
+                                            //多选框
+                                            td
+                                                input(type='checkbox',class='check',value='#{item.id}')
+                                            //社团名
+                                            td #{item.name}
+                                            //关键字
+                                            td #{item.keyword}
+                                            //申请者
+                                            td #{item.applier}
+                                            //审核状态
+                                            td(class="#{item.status == '通过'?'text-success':(item.status == '未通过'?'text-danger':'')}") #{item.status}
+                                            //操作
+                                            td
+                                                a(class="glyphicon glyphicon-ok text-success review #{item.status == '未审核'?'disabled':''}",value='ok',kind='ass') &nbsp;
+                                                a(class='glyphicon glyphicon-remove text-danger review',value='deny',kind='ass')
+                            //全选或者反选
+                            div.options
+                                div.checkbox
+                                    label
+                                        input(type='checkbox')
+                                        span 全选
+                                button.btn.btn-sm.btn-success 批量通过
+                                button.btn.btn-sm.btn-danger 批量否决
+                        //选项卡内容2  审批活动申请
+                        div.tab-pane#act
+                            table.table.table-hover.table-bordered
+                                thead.text-center
+                                    th 全选
+                                    th 社团名
+                                    th 关键字
+                                    th 申请者
+                                    th 操作
+                                tbody
+                                    each item in admin[1]
+                                        tr.text-center
+                                            td
+                                                input(type='checkbox',class='check')
+                                            td #{item.name}
+                                            td #{item.keyword}
+                                            td #{item.applier}
+                                            td
+                                                a(class='glyphicon glyphicon-ok') &nbsp;
+                                                a(class='glyphicon glyphicon-remove')
+                        //选项卡内容3  发布新闻
+                        div.tab-pane.active#news
+                            form.form-horizontal(action='../addNews',method='post',enctype='multipart/form-data')
+                                div.form-group
+                                    label.col-md-2.control-label 新闻标题:
+                                    div.col-md-3
+                                        input(type='text',placeholder='请输入新闻标题',class='form-control',name='title')
+                                    div.col-md-3.col-md-offset-2
+                                        div.msgBox
+                                            -if(error)
+                                                div.alert.alert-danger #{error}
+                                            -else if(success)
+                                                div.alert.alert-success #{success}
+                                div.form-group
+                                    label.col-md-2.control-label 新闻标题:
+                                    div.col-md-5
+                                        textarea(placeholder='请输入新闻内容',name='content',class='form-control',rows='12')
+                                div.form-group
+                                    label.col-md-2.control-label 新闻类型:
+                                    div.col-md-3
+                                        select.form-control(name='kind')
+                                            option(value='normal') 普通新闻
+                                            option(data-toggle='collapse',data-target='#hot',value='hot') 热点新闻
+                                div.form-group.collapse#hot
+                                    label.col-md-2.control-label 新闻图片:
+                                    div.col-md-3
+                                        input(type='file',name='picture')
+                                div.form-group
+                                    div.col-md-2.col-md-offset-2
+                                        button.btn.btn-primary 发布新闻
+                                    div.col-md-2
+                                        input(type='reset',value='重置内容').btn.btn-primary

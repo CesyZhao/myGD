@@ -2,23 +2,42 @@ nav.navbar.navbar-inverse
   div.container-fluid
     //logo
     div.navbar-header
-       a(class="navbar-brand",href="#") CSAM
-       cite college students' activities platform
+        a(class="navbar-brand",href="#")
+            img(src='../../images/logo2.png')
     //下拉菜单
     ul.nav.navbar-nav.navbar-right
-       li.dropdown
-           a(class="dropdown-toggle glyphicon glyphicon-cog",data-toggle="dropdown")
-           -if(!user)
-               ul.dropdown-menu
-                   li
-                       a(href="users/toLogin") login
-           -else if(title == '主页')
-               ul.dropdown-menu
-                   li
-                       a(href="../users/toPersonal") 个人中心
-                       a(href="../users/logout") 登出
-           -else
-               ul.dropdown-menu
-                   li
-                       a(href="toPersonal") 个人中心
-                       a(href="logout") 登出
+        -if(title!='注册'&&title!='登录')
+            li.userInfo
+                a(href="#{user.username ? '/personal/accountInfo' : '/users/toLogin'}",class="smallAvatar")
+                    img(src="../../images/avatar/#{user.username ? user.avatar : 'default.jpg'}")
+                    span #{user.username ? user.username : '登录!'}
+            li.dropdown
+                a(class="dropdown-toggle glyphicon glyphicon-menu-hamburger",data-toggle="dropdown")
+                ul.dropdown-menu
+                    li
+                        a(href="/users/logout") 登出
+        //li.dropdown ../../users/#{user ? 'toPersonal/user' : 'toLogin'}
+        //    a(class="dropdown-toggle glyphicon glyphicon-cog",data-toggle="dropdown")
+        //    -if(!user)
+        //        ul.dropdown-menu
+        //            li
+        //                a(href="users/toLogin") login
+        //    -else if(title == '主页')
+        //        ul.dropdown-menu
+        //            -if(user.user_level == 'A')
+        //                li
+        //                    a(href='../Admin') 管理员中心
+        //            li
+        //                a(href="../users/toPersonal") 个人中心
+        //            li
+        //                a(href="../users/logout") 登出
+        //    -else
+        //        ul.dropdown-menu
+        //
+        //            -if(user.user_level == 'A')
+        //                li
+        //                    a(href='../Admin') 管理员中心
+        //            li
+        //                a(href="toPersonal") 个人中心
+        //            li
+        //                a(href="logout") 登出

@@ -340,3 +340,180 @@
                                 })
                             })
                     });*/
+
+
+
+
+
+                     div.row.box
+                                                    div.detials.col-md-12
+                                                        form(enctype="multipart/form-data",class="formAvatar",method="post",action="changeAvatar")
+                                                            div.form-group
+                                                                label.col-md-2.text-right.control-label 头像:
+                                                                div.col-md-8
+                                                                    div.avatar
+                                                                        img(src="/images/#{user.avatar}")
+                                                                    a(href="javascript:void(0)",class="upload")
+                                                                        input(type="file",name="avatar")
+                                                                        span 点击更换头像
+                                                                        input(type="hidden",value="#{user.id}",name='id')
+                                                    div.detials.col-md-12
+                                                        form(method='post',action='changeUserName')
+                                                            div.form-group
+                                                                label.col-md-2.text-right.control-label 用户名:
+                                                                div.col-md-6
+                                                                    div.userName
+                                                                        span.name #{user.username}
+                                                                        a(class='',data-target='#editName',data-toggle='collapse',href='#editName') 编辑
+                                                                    div.collapse#editName
+                                                                        div.well
+                                                                            div.col-md-8
+                                                                                input(type='text',name='username',value='#{user.username}',class='form-control')
+                                                                            div.col-md-2
+                                                                                button.btn.btn-default 保存
+                                                                            div.clearfix
+                                                                    div.msgBox
+                                                                        -if(error)
+                                                                            div.alert.alert-danger #{error}
+                                                                        -else if(success)
+                                                                            div.alert.alert-success #{success}
+                                                    div.detials.col-md-12
+                                                        form(method='post',action='changePassword')
+                                                            label.col-md-2.text-right.control-label 密码:
+                                                            div.row.text-center
+                                                                a(class='',data-target='#editPwd',data-toggle='collapse',href='#editPwd') 更改密码
+                                                            div.collapse#editPwd
+                                                                div.well
+                                                                    label 请回答密保问题:#{user.question}
+                                                                    div.row
+                                                                        label.col-md-3.control-label 答案:
+                                                                        div.col-md-7.col-md-offset-2
+                                                                            input(type='text',class='form-control',name='answer')
+                                                                    div.row
+                                                                        label.col-md-5 新的密码:
+                                                                        div.col-md-7
+                                                                            input(type='password',class='form-control',name='newPassword')
+                                                                    div.row
+                                                                        div.col-md-1.col-md-offset-8
+                                                                            button.btn.btn-default 更改
+                                                            div.msgBox
+                                                                -if(error1)
+                                                                    div.alert.alert-danger #{error1}
+                                                                -else if(success1)
+                                                                    div.alert.alert-success #{success1}
+
+
+         router.post("/toPersonal/changeAvatar",upload.single('avatar'),function(req,res){
+             var sql = "update users set avatar = ? where id = ?";
+             database.dataHandler(sql,[req.file.filename,req.body.id])
+                 .then(function(value){
+                     if(value.affectedRows == 1){
+                         //req.session.user.avatar = req.file.filename;
+                         database.reFreshUserInfo(req.session.user.id)
+                             .then(function(value){
+                                 req.session.user  = value[0];
+                                 res.redirect('user');
+                             });
+                     }
+                 })
+         });
+         router.post('/toPersonal/changeInfo',function(req,res){
+             var info = req.body;
+             var id= req.session.user.id;
+             var sql = 'update users set realname=?, age=?, gender=?, birthday=?, hobby=?, description=? where id=?';
+             database.dataHandler(sql,[info.realName,info.age,info.gender,info.birthday,info.hobby.toString(),info.description,id])
+                 .then(function(value){
+                     if(value.affectedRows == 1){
+                         database.reFreshUserInfo(req.session.user.id)
+                             .then(function(value){
+                                 req.session.user  = value[0];
+                                 res.redirect('user');
+                             });
+                     }
+                 })
+         });
+         router.post('/toPersonal/changeUserName',function(req,res){
+             var newName = req.body.username;
+             var sql = 'update users set username = ? where id = ?';
+             checkUserName.check(newName)
+                 .then(function(value){
+                     if(value.length == 1){
+                         req.flash('error','该用户名被占用!');
+                         res.redirect('user');
+                     }else{
+                         database.dataHandler(sql,[newName,req.session.user.id])
+                             .then(function(value){
+                                 if(value.affectedRows == 1){
+                                     database.reFreshUserInfo(req.session.user.id)
+                                         .then(function(value){
+                                             req.flash('success','用户名修改成功!');
+                                             req.session.user  = value[0];
+                                             res.redirect('user');
+                                         })
+                                 }
+                             })
+                     }
+                 })
+         });
+         router.post('/toPersonal/changePassword',function(req,res){
+             var data = req.body;
+             var user = req.session.user;
+             var sqlCheck = 'select * from users where id=? and answer = ?';
+             var sqlUpdPwd = 'update users set password = ? where id = ?';
+             database.dataHandler(sqlCheck,[user.id,data.answer])
+                 .then(function(value){
+                     if(value.length == 1){
+                         database.dataHandler(sqlUpdPwd,[data.password,user.id])
+                             .then(function(value){
+                                 if(value.affectedRows == 1){
+                                     req.flash('success1','密码更改成功!');
+                                     res.redirect('user');
+                                 }
+                             })
+                     }else{
+                         req.flash('error1','密保问题答案错误!');
+                         res.redirect('user');
+                     }
+                 })
+         });
+         router.post('/review/:id/:status',function(req,res){
+             var id = req.params.id;
+             var status = req.params.status;
+             var ass = req.body;
+             var sql;
+             var sql2;
+             var task2;
+             switch (status){
+                 case 'ok':
+                     sql = "update apply_to_admin set status = '通过' where id = ?";
+                     sql2 = 'insert into association_info(name,keyword,leader,avatar,founddate) values (?,?,?,?,?)';
+                     task2 = database.dataHandler(sql2,[ass.name,ass.keyword,ass.leader,'default.jpg',ass.founddate]);
+                     break;
+                 case 'deny':
+                     sql = "update apply_to_admin set status = '未通过' where id = ?";
+                     sql2 = "delete from association_info where keyword=?";
+                     task2 = database.dataHandler(sql2,ass.keyword);
+                     break;
+             }
+             var task1 = database.dataHandler(sql,id);;
+             Promise.all([task1,task2])
+                 .then(function(value){
+                    res.send('finish');
+                 })
+         });
+         router.post('/addNews',picture.single('picture'),function(req,res){
+             var news = req.body;
+             var date = new Date();
+             var year = date.getFullYear();
+             var month = date.getMonth()+1;
+             var day = date.getDate();
+             var time = year+'-'+month+'-'+day;
+             var sql =  'insert into news (title,content,date,kind,picture) values(?,?,?,?,?)';
+
+             var pic = news.kind == 'hot'?req.file.filename:'';
+             database.dataHandler(sql,[news.title,news.content,time,news.kind,pic])
+                 .then(function(value){
+                     req.flash('success','新闻发布成功!');
+                     res.redirect('toPersonal/admin');
+                 })
+         });

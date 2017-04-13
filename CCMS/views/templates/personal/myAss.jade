@@ -1,0 +1,47 @@
+extends ../../personales
+block contents
+    div.content.col-md-10
+        div.infoBox
+            div.row.box
+                div.search.row
+                    div.col-md-6
+                        div.row
+                            div.col-md-12.choice
+                                span 种类:
+                                a(href='toMyAss#listPanel',class="#{category ? '' : 'active'}") 全部
+                                a(href="toMyAss?category=sports#listPanel",class="#{category == 'sports' ? 'active' : ''}") 运动
+                                a(href="toMyAss?category=music#listPanel",class="#{category == 'music' ? 'active' : ''}") 音乐
+                                a(href="toMyAss?category=art#listPanel",class="#{category == 'art' ? 'active' : ''}") 艺术
+                                a(href="toMyAss?category=literary#listPanel",class="#{category == 'literary' ? 'active' : ''}") 文艺
+                                a(href="toMyAss?category=carton#listPanel",class="#{category == 'carton' ? 'active' : ''}") 二次元
+                    div.col-md-6
+                        form.form-horizontal(method='get',action='index#listPanel')
+                            div.form-group
+                                label.col-md-6
+                                div.col-md-4
+                                    input(type='text',name='searchWords',class='form-control',placeholder='请输入查询内容')
+                                div.col-md-1
+                                    button.btn.btn-primary 查询
+                div.row
+                    each item in ass
+                        div.item.col-md-3
+                            div.thumbnail
+                                img(src='../../images/ass_avatar/#{item.avatar}')
+                                div.caption
+                                    h3 #{item.name}
+                                    p #{item.keyword}
+                -if(ass.length!=0)
+                    nav.pagePanel.col-md-6.col-md-offset-3.text-center
+                        ul.pagination
+                            li
+                                a
+                                    span &laquo;
+                            -for(var i=1; i<=pagesAss; i++)
+                                li
+                                    -if(category)
+                                        a(href='toMyAss?page=' + i + '&category=' + category + '#listPanel') #{i}
+                                    -else
+                                        a(href='toMyAss?page=' + i + '#listPanel') #{i}
+                            li
+                                a
+                                    span &raquo;

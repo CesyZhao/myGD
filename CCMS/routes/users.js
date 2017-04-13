@@ -5,7 +5,7 @@ var checkUserName = require('../midwares/checkUserName');
 var checkEmpty = require('../midwares/checkEmpty');
 var path = require('path');
 var multer  = require('multer');
-var upload = multer({ dest: 'public/images/'});
+var upload = multer({ dest: 'myGD/CCMS/public/images/avatar'});
 /* GET users listing. */
 //跳转至登录页面的路由
 router.get('/toLogin', function(req, res, next) {
@@ -20,12 +20,58 @@ router.get('/toRegister', function(req, res, next) {
     });
 });
 //跳转至个人中心的路由
-router.get('/toPersonal', function(req, res, next) {
+router.get('/toPersonal/:category', function(req, res, next) {
+    var category = req.params.category;
     var user = req.session.user;
-    res.render("personal",{
-        title:"个人中心",
-        user:req.session.user
-    });
+    res.locals.category = category;
+    var getAssSql =  "select * from association_info where id in (select a_id from association_user_info where u_id = ?)";
+    var task1;
+    var task2;
+    var task3;
+    var sql;
+    var data;
+    if(category == 'user'){
+        res.render("templates/"+category,{
+            title:"个人中心",
+            user:req.session.user
+        });
+    }else{
+        switch (category){
+            case 'ass':
+                sql = "select * from association_info where id in (select a_id from association_user_info where u_id = ?)";
+                data = user.id;
+                task1 = database.dataHandler(sql,data);
+                break;
+            case 'apply':
+                break;
+            case 'admin':
+                var sql1 = "select * from apply_to_admin where kind = 'association' ";
+                task1 = database.dataHandler(sql1,'');
+                var sql2 = "select * from apply_to_admin where kind = 'activity' ";
+                task2 = database.dataHandler(sql2,'');
+                break;
+        }
+        Promise.all([task1,task2])
+            .then(function(value){
+                res.locals[category] = value;
+                res.render("templates/"+category,{
+                    title:"个人中心",
+                    user:req.session.user
+                });
+            })
+            .catch(function(error){
+                console.log(error);
+            })
+      /*  database.dataHandler(sql,data)
+            .then(function(value){
+                res.locals[category] = value;
+                res.render("templates/"+category,{
+                    title:"个人中心",
+                    user:req.session.user
+                });
+            })*/
+    }
+
 });
 //跳转至社团中心的路由
 router.get('/association/:id',function(req,res){
@@ -38,7 +84,6 @@ router.get('/association/:id',function(req,res){
             res.locals.ass_info = value[0];
             res.locals.ass_members = value[1];
             res.locals.ass_notifes = value[2];
-            console.log(value[1]);
             res.render('association',{
                 title:'社团中心'
             });
@@ -98,77 +143,30 @@ router.post("/login",function(req,res){
                 req.session.user = value[0];
                 //登录成功后跳转至index主页
                 res.redirect("/index");
+            }else{
+                req.flash('error','用户名或者密码错误!');
+                res.redirect('toLogin');
             }
         })
 });
 //登出的路由
 router.get("/logout",function(req,res){
     req.session.user = {};
+    console.log(req.session.user.length);
     //登出之后默认跳回主页
-    res.redirect("../index");
-});
-router.post("/changeAvatar",upload.single('avatar'),function(req,res){
-    var sql = "update users set avatar = ? where id = ?";
-    database.dataHandler(sql,[req.file.filename,req.body.id])
-        .then(function(value){
-            if(value.affectedRows == 1){
-                //req.session.user.avatar = req.file.filename;
-                database.reFreshUserInfo(req.session.user.id)
-                    .then(function(value){
-                        req.session.user  = value[0];
-                        res.redirect('toPersonal');
-                    });
-            }
-        })
-});
-router.post('/changeInfo',function(req,res){
-    var info = req.body;
-    var id= req.session.user.id;
-    var sql = 'update users set realname=?, age=?, gender=?, birthday=?, hobby=?, description=? where id=?';
-    database.dataHandler(sql,[info.realName,info.age,info.gender,info.birthday,info.hobby.toString(),info.description,id])
-        .then(function(value){
-            if(value.affectedRows == 1){
-                database.reFreshUserInfo(req.session.user.id)
-                    .then(function(value){
-                        req.session.user  = value[0];
-                        res.redirect('toPersonal');
-                    });
-            }
-        })
-});
-router.post('/changeUserName',function(req,res){
-    var newName = req.body.username;
-    var sql = 'update users set username = ? where id = ?';
-    checkUserName.check(newName)
-        .then(function(value){
-            if(value.length == 1){
-                req.flash('error','该用户名被占用!');
-                res.redirect('toPersonal');
-            }else{
-                database.dataHandler(sql,[newName,req.session.user.id])
-                    .then(function(value){
-                        if(value.affectedRows == 1){
-                            database.reFreshUserInfo(req.session.user.id)
-                                .then(function(value){
-                                    req.session.user  = value[0];
-                                    res.redirect('toPersonal');
-                                })
-                        }
-                    })
-            }
-        })
+    res.redirect("/index");
 });
 router.post('/applyNew',function(req,res){
     var association = req.body;
     var sqlCheck = 'select * from association_info where keyword = ?';
-    var sqlApply = "insert into apply_association(name,keyword,status) values(?,?,'未审核')";
+    var sqlApply = "insert into apply_to_admin(name,keyword,status,kind,applier,category) values(?,?,'0','association',?,?)";
     database.dataHandler(sqlCheck,[association.keyword])
         .then(function(value){
             if(value.length >= 1){
                 req.flash('error','该关键字的社团已经存在!');
                 res.redirect('../index#listPanel');
             }else{
-                database.dataHandler(sqlApply,[association.name,association.keyword])
+                database.dataHandler(sqlApply,[association.name,association.keyword,req.session.user.username,association.category])
                     .then(function(value){
                         if(value.affectedRows == 1){
                             req.flash('success','申请已经提交，你可以在个人中心查看审核结果!');

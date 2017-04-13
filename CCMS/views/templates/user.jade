@@ -1,0 +1,126 @@
+extends ../personales
+block contents
+    div.content.col-md-11(data-spy='scroll',data-target='.infoBox')
+        div.infoBox
+            div.col-md-6
+                header.categoryTitle 账号信息
+                div.row.box
+                    form(enctype="multipart/form-data",class="formAvatar form-horizontal",method="post",action="changeAvatar")
+                        div.form-group
+                            label.col-md-2.control-label 头像:
+                            div.col-md-6
+                                div.avatar
+                                    img(src="../../images/avatar/#{user.avatar}")
+                                a(href="javascript:void(0)",class="upload")
+                                    input(type="file",name="avatar")
+                                    span 点击更换头像
+                                    input(type="hidden",value="#{user.id}",name='id')
+                    form(method='post',action='changeUserName',class='form-horizontal')
+                        div.form-group
+                            label.col-md-2.control-label 用户名:
+                            div.col-md-6
+                                div.row
+                                    div.col-md-12.text-center
+                                        div.userName
+                                            span.name #{user.username}
+                                            a(class='',data-target='#editName',data-toggle='collapse',href='#editName') 编辑
+                                div.collapse#editName
+                                    div.well
+                                        div.col-md-8
+                                            input(type='text',name='username',value='#{user.username}',class='form-control')
+                                        div.col-md-2
+                                            button.btn.btn-default 保存
+                                        div.clearfix
+                                div.msgBox
+                                    -if(error)
+                                        div.alert.alert-danger #{error}
+                                    -else if(success)
+                                        div.alert.alert-success #{success}
+                    form(method='post',action='changePassword',class='form-horizontal')
+                        div.form-group
+                            label.col-md-2.control-label 密码:
+                            div.col-md-6
+                                div.row
+                                    div.col-md-12.text-center.username
+                                        a(class='pwd',data-target='#editPwd',data-toggle='collapse',href='#editPwd') 更改密码
+                                div.collapse#editPwd
+                                    div.well
+                                        label 请回答密保问题:#{user.question}
+                                        div.row
+                                            label.col-md-4.control-label 答案:
+                                            div.col-md-7.col-md-offset-1
+                                                input(type='text',class='form-control',name='answer')
+                                        div.row
+                                            label.col-md-5 新的密码:
+                                            div.col-md-7
+                                                input(type='password',class='form-control',name='password')
+                                        div.row
+                                            div.col-md-1.col-md-offset-8
+                                                button.btn.btn-default 更改
+                                div.msgBox
+                                    -if(error1)
+                                        div.alert.alert-danger #{error1}
+                                    -else if(success1)
+                                        div.alert.alert-success #{success1}
+            //右边
+            div.col-md-6
+                header.categoryTitle 用户信息
+                div.row.box
+                    form.form-horizontal(id='InfoForm',method='post',action='changeInfo')
+                        div.form-group
+                            label.control-label.col-md-2 真实姓名:
+                            div.col-md-5
+                                input(type='text',class='form-control',value='#{user.realname}',name='realName')
+                        div.form-group
+                            label.control-label.col-md-2 年龄:
+                            div.col-md-5
+                                input(type='number',class='form-control',value='#{user.age}',name='age')
+                        div.form-group
+                            label.control-label.col-md-2 性别:
+                            div.col-md-3
+                                div.radio.col-md-4
+                                    label
+                                        input(type="radio",name="gender",id="male",value="男" checked="#{user.gender == '男' ? 'checked' : 'unchecked'}")
+                                        span 男
+                                div.radio.col-md-4
+                                    label
+                                        input(type="radio",name="gender",id="female",value="女" checked="#{user.gender == '女' ? 'checked' : 'unchecked'}")
+                                        span 女
+                        div.form-group
+                            label.control-label.col-md-2 生日:
+                            div.col-md-5
+                                input(type='date',value='#{user.birthday}',name='birthday',class='form-control')
+                        div.form-group
+                            label.control-label.col-md-2 爱好:
+                            div.col-md-6
+                                div.checkbox.col-md-4
+                                    label
+                                        input(type="checkbox",name="hobby",value="运动")
+                                        span 运动
+                                div.checkbox.col-md-4
+                                    label
+                                        input(type="checkbox",name="hobby",value="音乐")
+                                        span 音乐
+                                div.checkbox.col-md-4
+                                    label
+                                        input(type="checkbox",name="hobby",value="旅行")
+                                        span 旅行
+                                div.checkbox.col-md-4
+                                    label
+                                        input(type="checkbox",name="hobby",value="美食")
+                                        span 美食
+                                div.checkbox.col-md-4
+                                    label
+                                        input(type="checkbox",name="hobby",value="游戏")
+                                        span 游戏
+                                div.checkbox.col-md-4
+                                    label
+                                        input(type="checkbox",name="hobby",value="影视")
+                                        span 影视
+                        div.form-group
+                            label.control-label.col-md-2 个人简介:
+                            div.col-md-6
+                                textarea(name="description",class='form-control',rows='5') #{user.description}
+                        div.form-group
+                            div.col-md-1.col-md-offset-10
+                                button.btn.btn-default(form='InfoForm') 保存修改

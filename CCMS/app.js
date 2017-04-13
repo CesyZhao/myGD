@@ -12,6 +12,9 @@ var session = require("express-session");
 //导入路由
 var index = require('./routes/index');
 var users = require('./routes/users');
+var admin = require('./routes/admin');
+var personal = require('./routes/personal');
+var association = require('./routes/association');
 var test = require('./routes/test');
 var app = express();
 // view engine setup  设置模板引擎以及模板路径
@@ -36,6 +39,8 @@ app.use(function (req, res, next) {
   res.locals.user = req.session.user;
   res.locals.success = req.flash('success').toString();
   res.locals.error = req.flash('error').toString();
+  res.locals.success1 = req.flash('success1').toString();
+  res.locals.error1 = req.flash('error1').toString();
   next();
 });
 // uncomment after placing your favicon in /public  页面图标
@@ -52,6 +57,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', index);
 //路由 users
 app.use('/users', users);
+app.use('/admin',admin);
+app.use('/personal',personal);
+app.use('/association',association);
 //测试路由
 app.use('/',test);
 

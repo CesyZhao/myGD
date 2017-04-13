@@ -1,0 +1,109 @@
+extends ../../personales
+block contents
+    div.content.col-md-10
+        div.row.box
+                div.search.row
+                    div.col-md-6
+                        div.row
+                            div.col-md-12.choice
+                                span 种类:
+                                a(href='toMyApply',class="#{categoryApply ? '' : 'active'}") 全部
+                                a(href="toMyApply?category=0",class="#{categoryApply == '0' ? 'active' : ''}") 未审核
+                                a(href="toMyApply?category=1",class="#{categoryApply == '1' ? 'active' : ''}") 待办理
+                                a(href="toMyApply?category=2",class="#{categoryApply == '2' ? 'active' : ''}") 通过
+                                a(href="toMyApply?category=3",class="#{categoryApply == '3' ? 'active' : ''}") 未通过
+                table.table.table-hover.table-bordered
+                    thead.text-center
+                        th 序号
+                        th 社团名称
+                        th 关键字
+                        th 审核状态
+                        th 否拒绝理由
+                        th 操作
+                    tbody
+                        each item,index in myApply
+                            tr.tr
+                                //多选框
+                                td #{index + 1}
+                                    input(type='hidden',class='check',value='#{item.id}')
+                                //社团名
+                                td #{item.name}
+                                //关键字
+                                td #{item.keyword}
+                                //审核状态
+                                td(class="#{item.status == '1' ? 'text-warning' : (item.status == '2' ? 'text-success':(item.status == '3'?'text-danger':''))}") #{item.status == '0'?'未审核':(item.status=='1'?'待办理':(item.status=='2'?'通过':'未通过'))}
+                                td #{item.reason?item.reason:'无'}
+                                -if(item.status=='0')
+                                    td
+                                        button.btn.btn-xs.btn-success.btn-change 修改
+                                        button.btn.btn-xs.btn-danger.btn-dismiss(data-toggle='modal',data-target='#refuse') 撤销
+                                -else if(item.status=='1'||item.status=='2')
+                                    td
+                                        button.btn.btn-default.btn-xs(disabled) 无法操作
+                                -else if(item.status=='3')
+                                    td
+                                        button.btn.btn-primary.btn-xs.btn-detials 查看细节
+                nav.pagePanel.col-md-6.col-md-offset-3.text-center
+                    ul.pagination
+                        li
+                            a
+                                span &laquo;
+                        -for(var i=1; i<=pages; i++)
+                            li
+                                -if(categoryApply)
+                                    a(href='toMyApply?page=' + i + '&category=' + categoryApply + '') #{i}
+                                -else
+                                    a(href='toMyApply?page=' + i + '') #{i}
+                        li
+                            a
+                                span &raquo;
+                div
+                    p Tips: "待办理" 表示管理员已经初步通过您的申请,进赶紧去办理相关文件!
+                div.modal.fade#detials
+                    div.modal-dialog
+                        div.modal-content
+                            div.modal-header.text-center
+                                h3 被否决申请
+                            div.modal-body
+                                div.row
+                                    h4.col-md-5.text-right 社团名称:
+                                    h4
+                                div.row
+                                    h4.col-md-5.text-right 关键字:
+                                    h4
+                                div.row
+                                    h4.col-md-5.text-right 否决原因:
+                                    h4
+                            div.modal-footer
+                                button.btn.btn-default(data-dismiss='modal') 关闭
+        div.modal.fade#change
+            div.modal-dialog
+                div.modal-content
+                    div.modal-header
+                        h3 修改新闻
+                    div.modal-body
+                        form.form-horizontal(action='changeApply',method='post',id='updateForm')
+                            div.form-group
+                                input(type='hidden',name='id')
+                                label.col-md-3.control-label 社团名称:
+                                div.col-md-8
+                                    input(type='text',class='form-control',name='name')
+                            div.form-group
+                                label.col-md-3.control-label 关键字:
+                                div.col-md-8
+                                    input(type='text',class='form-control',name='keyword')
+                    div.modal-footer
+                        button.btn.btn-success(form='updateForm') 更新
+                        button.btn.btn-danger(data-dismiss='modal') 取消
+            -if(success == '修改申请成功!')
+                script.
+                    swal('修改申请成功!','','success');
+            -else if(error == '修改申请失败!')
+                script.
+                    swal('修改申请失败','很遗憾，失败了，请重试!','error');
+            -else if(success == '撤销申请成功!')
+                script.
+                    swal('撤销申请成功!','','success');
+            -else if(error == '撤销申请失败!')
+                script.
+                    swal('撤销申请失败', '很遗憾，失败了，请重试!', 'error');

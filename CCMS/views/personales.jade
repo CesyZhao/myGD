@@ -1,0 +1,100 @@
+extends layout
+block content
+    div
+        include templates/header
+        article.row.container-fluid.contents
+            section
+                aside.leftBar.col-md-1
+                    div.panel-group.text-center#accordion(aria-multiselectable="true")
+                        div.panel.panel-default
+                            div.panel-heading
+                                a(data-toggle='collapse',data-parent='#accordion',href='#menuOne',aria-expanded="true",aria-controls="collapseOne")
+                                    span.glyphicon.glyphicon-menu-hamburger
+                                    span 信息管理
+                            div(class="panel-collapse collapse #{collapse == 'menuOne'?'in':''}")#menuOne
+                                div.panel-body
+                                    ul.secMenu
+                                        li(class="#{status == 'accountInfo'?'active':''}")
+                                            a(href='/personal/accountInfo') 账号信息
+                                        li(class="#{status == 'personalInfo'?'active':''}")
+                                            a(href='/personal/personalInfo') 详细信息
+                        div.panel.panel-default
+                            div.panel-heading
+                                a(data-toggle='collapse',data-parent='#accordion',href='#menuTwo',aria-expanded="true",aria-controls="collapseOne")
+                                    span.glyphicon.glyphicon-user
+                                    span 我的社团
+                            div(class="panel-collapse collapse #{collapse == 'menuTwo' ? 'in' : ''}")#menuTwo
+                                div.panel-body
+                                    ul.secMenu
+                                        li(class="#{status == 'myAss' ? 'active' : ''}")
+                                            a(href='/personal/toMyAss') 加入的社团
+                                        li(class="#{status == 'myAdminAss' ? 'active' : ''}")
+                                            a(href='/personal/toMyManAss') 管理的社团
+                        div.panel.panel-default
+                            div.panel-heading
+                                a(data-toggle='collapse',data-parent='#accordion',href='#menuThree',aria-expanded="true",aria-controls="collapseOne")
+                                    span.glyphicon.glyphicon-bell
+                                    span 我的申请
+                            div(class="panel-collapse collapse #{collapse == 'menuThree'?'in':''}")#menuThree
+                                div.panel-body
+                                    ul.secMenu
+                                        li(class="#{status == 'toMyApply'?'active':''}")
+                                            a(href='/personal/toMyApply') 社团申请
+                        div.panel.panel-default
+                            div.panel-heading
+                                a(data-toggle='collapse',data-parent='#accordion',href='#menuFour',aria-expanded="true",aria-controls="collapseOne")
+                                    span.glyphicon.glyphicon-cog
+                                    span 平台管理
+                            div(class="panel-collapse collapse #{collapse == 'menuFour'?'in':''}")#menuFour
+                                div.panel-body
+                                    ul.secMenu
+                                        li(class="#{status == 'toNews'?'active':''}")
+                                            a(href='/admin/toNews') 平台新闻管理
+                                        li(class="#{status == 'toAssApply'?'active':''}")
+                                            a(href='/admin/toAssApply') 社团申请管理
+                                        li(class="#{status == 'toActApply'?'active':''}")
+                                            a(href='/admin/toActApply') 活动申请管理
+                        div.panel.panel-default
+                            div.panel-heading
+                                a(href='../index')
+                                    span.glyphicon.glyphicon-log-out
+                                    span 回到主页
+                    //ul.menuOfAss
+                    //    li(class="#{category == 'user'?'active':''}")
+                    //        a(href="#infoMenu",data-toggle='collapse')
+                    //            span.glyphicon.glyphicon-menu-hamburger
+                    //            span 信息管理
+                    //        div(class='collapse #{collapse}')#infoMenu
+                    //            ul
+                    //                li(class='#{status}')
+                    //                    a(href='/personal/accountInfo') 账号信息
+                    //                li
+                    //                    a(href='/personal/personalInfo') 详细信息
+                    //    li(class="#{category == 'ass'?'active':''}")
+                    //        a(href="/users/ass")
+                    //            span.glyphicon.glyphicon-user
+                    //            span 我的社团
+                    //    li(class="#{category == 'apply'?'active':''}")
+                    //        a(href="javascript:void(0)")
+                    //            span.glyphicon.glyphicon-bell
+                    //            span 我的申请
+                    //    -if(user.user_level == 'A')
+                    //        li(class="#{category == 'admin'?'active':''}")
+                    //            a(href="#adminMenu",data-toggle='collapse')
+                    //                span.glyphicon.glyphicon-cog
+                    //                span 平台管理
+                    //            div.collapse#adminMenu
+                    //                ul
+                    //                    li
+                    //                        a(href='/admin/toNews') 平台新闻管理
+                    //                    li
+                    //                        a(href='/admin/toAssApply') 社团申请管理
+                    //                    li
+                    //                        a(href='/admin/toAct') 活动申请管理
+                    //    li
+                    //        a(href="/index")
+                    //            span.glyphicon.glyphicon-log-out
+                    //            span 回到主页
+            section
+                block contents
+        script(type="text/javascript",src="/javascripts/index.js")

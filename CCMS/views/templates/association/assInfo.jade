@@ -1,0 +1,42 @@
+extends ../../asses
+block contents
+    div.content.col-md-10
+        div.row.box
+                div.row
+                    div.col-md-2.with-corner.text-center 社团简介
+                    div.col-md-10
+                        div.row
+                            div.col-md-6
+                                div.row
+                                    div.col-md-4.text-right
+                                        h4 社团名称:
+                                    div.col-md-6
+                                        h4 #{ass_info.name}
+                                div.row
+                                    div.col-md-4.text-right
+                                        h4 关键词语:
+                                    div.col-md-6
+                                        h4 #{ass_info.keyword}
+                                div.row
+                                    div.col-md-4.text-right
+                                        h4 社团社长:
+                                    div.col-md-6
+                                        h4 #{ass_info.leader}
+                                div.row
+                                    div.col-md-4.text-right
+                                        h4 成立时间:
+                                    div.col-md-6
+                                        h4 #{ass_info.founddate.toLocaleDateString()}
+                            div.col-md-3.col-md-offset-1
+                                div.row
+                                    div.col-md-6
+                                        h4 社团头像:
+                                    div.ass_avatar.col-md-6
+                                        img(src='../../images/ass_avatar/#{ass_info.avatar}')
+                        div.row
+                            div.col-md-2.text-right
+                                h4 社团简介:
+                            div.col-md-9
+                                h4 #{ass_info.description}
+
+

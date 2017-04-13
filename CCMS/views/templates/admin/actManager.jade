@@ -1,0 +1,106 @@
+extends ../../personales
+block contents
+    div.content.col-md-10
+        div.row.box
+            div.search.row
+                div.col-md-6
+                    div.row
+                        div.col-md-12.choice
+                            span 种类:
+                            a(href='toAssApply',class="#{categoryApply ? '' : 'active'}") 全部
+                            a(href="toAssApply?category=0",class="#{categoryApply == '0' ? 'active' : ''}") 未审核
+                            a(href="toAssApply?category=1",class="#{categoryApply == '1' ? 'active' : ''}") 待办理
+                            a(href="toAssApply?category=2",class="#{categoryApply == '2' ? 'active' : ''}") 通过
+                            a(href="toAssApply?category=3",class="#{categoryApply == '3' ? 'active' : ''}") 未通过
+            div.tab-pane#ass
+                table.table.table-hover.table-bordered
+                    thead.text-center
+                        th 序号
+                        th 社团名
+                        th 关键字
+                        th 申请者
+                        th 审核状态
+                        th 操作
+                    tbody
+                        each item,index in act
+                            tr.tr
+                                //多选框
+                                td #{index+1}
+                                    //input(type='checkbox',class='check',value='#{item.id}')
+                                //社团名
+                                td #{item.name}
+                                //关键字
+                                td #{item.keyword}
+                                //申请者
+                                td #{item.applier}
+                                //审核状态
+                                td(class="#{item.status == '1' ? 'text-warning' : (item.status == '2' ? 'text-success':(item.status == '3'?'text-danger':''))}") #{item.status == '0'?'未审核':(item.status=='1'?'待办理':(item.status=='2'?'通过':'未通过'))}
+                                //操作
+                                td
+                                    -if(item.status == '2')
+                                        button.btn.btn-xs.btn-success(disabled) 通过
+                                        button.btn.btn-xs.btn-danger.btn-refuse(data-toggle='modal',data-target='#refuse') 否决
+                                    -else if(item.status == '3')
+                                        form(class='passForm',action='reviewAct/#{item.id}/waiting',method='post')
+                                            input(type='hidden',name='name',value='#{item.name}')
+                                            input(type='hidden',name='keyword',value='#{item.keyword}')
+                                            input(type='hidden',name='leader',value='#{item.applier}')
+                                            input(type='hidden',name='category',value='#{item.category}')
+                                            button.btn.btn-xs.btn-warning 代办
+                                        input(type='hidden',value='#{item.id}')
+                                        button.btn.btn-xs.btn-danger.btn-refuse(data-toggle='modal',data-target='#refuse',disabled) 否决
+                                    -else if(item.status == '1')
+                                        form(class='passForm',action='reviewAct/#{item.id}/ok',method='post')
+                                            input(type='hidden',name='name',value='#{item.name}')
+                                            input(type='hidden',name='keyword',value='#{item.keyword}')
+                                            input(type='hidden',name='leader',value='#{item.applier}')
+                                            input(type='hidden',name='category',value='#{item.category}')
+                                            button.btn.btn-xs.btn-success 通过
+                                        input(type='hidden',value='#{item.id}')
+                                        button.btn.btn-xs.btn-danger.btn-refuse(data-toggle='modal',data-target='#refuse') 否决
+                                    -else if(item.status == '0')
+                                        form(class='passForm',action='reviewAct/#{item.id}/waiting',method='post')
+                                            input(type='hidden',name='name',value='#{item.name}')
+                                            input(type='hidden',name='keyword',value='#{item.keyword}')
+                                            input(type='hidden',name='leader',value='#{item.applier}')
+                                            input(type='hidden',name='category',value='#{item.category}')
+                                            button.btn.btn-xs.btn-warning 待办
+                                        input(type='hidden',value='#{item.id}')
+                                        button.btn.btn-xs.btn-danger.btn-refuse(data-toggle='modal',data-target='#refuse') 否决
+                nav.pagePanel.col-md-6.col-md-offset-3.text-center
+                    ul.pagination
+                        li
+                            a
+                                span &laquo;
+                        -for(var i=1; i<=pagesAct; i++)
+                            li
+                            -if(categoryApply)
+                                a(href='toAssApply?page=' + i + '&category=' + categoryAss + '') #{i}
+                            -else
+                                a(href='toAssApply?page=' + i + '') #{i}
+                        li
+                            a
+                                span &raquo;
+                div.modal.fade#refuse
+                    div.modal-dialog
+                        div.modal-content
+                            div.modal-header 填写否决理由
+                            div.modal-body
+                                form.form-horizontal(method='post',id='refuseForm')
+                                    div.form-group
+                                        label.control-label.col-md-3 否决理由:
+                                        div.col-md-8
+                                            textarea(class='form-control',placeholder='请填写否决理由!',rows='8',name='reason')
+                                            input(type='hidden',name='keyword')
+                            div.modal-footer
+                                button.btn.btn-success(form='refuseForm') 确定
+                                button.btn.btn-danger(data-dismiss='modal') 取消
+        div.row
+            div.col-md-2
+                div.msgBox
+                    -if(error == '审核失败!')
+                        script.
+                            swal('审核失败!','出错了，请重试!','error')
+                    -else if(success == '审核成功!')
+                        script.
+                            swal('审核成功!', '', 'success')

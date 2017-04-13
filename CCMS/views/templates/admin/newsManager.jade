@@ -1,0 +1,120 @@
+extends ../../personales
+block contents
+    div.content.col-md-10
+        div.row.box
+            div.search.row
+                div.col-md-6
+                    div.row
+                        div.col-md-12.choice
+                            span 种类:
+                            a(href='toNews',class="#{categoryNews ? '' : 'active'}") 全部
+                            a(href="toNews?category=normal",class="#{categoryNews == 'normal' ? 'active' : ''}") 普通新闻
+                            a(href="toNews?category=hot",class="#{categoryNews == 'hot' ? 'active' : ''}") 热点新闻
+            table.table.table-hover.table-bordered
+                thead.text-center
+                    th 序号
+                    th 标题
+                    th 内容
+                    th 种类
+                    th 时间
+                    th 操作
+                tbody
+                    each item,index in news
+                        tr
+                            td #{index+1}
+                            td.news_title #{item.title}
+                            td.news_content #{item.content}
+                            td.news_kind #{item.kind == 'normal'?'普通新闻':'热点新闻'}
+                            td #{item.date.toLocaleDateString()}
+                            td
+                                input(type='hidden' value='#{item.id}')
+                                button.btn.btn-xs.btn-success.btn-update 修改
+                                button.btn.btn-xs.btn-danger.btn-delete 删除
+            nav.pagePanel.col-md-6.col-md-offset-3.text-center
+                ul.pagination
+                    li
+                        a
+                            span &laquo;
+                    -for(var i=1; i<=pages; i++)
+                        li
+                            -if(categoryNews)
+                                a(href='toNews?page=' + i + '&category=' + categoryNews + '') #{i}
+                            -else
+                                a(href='toNews?page=' + i + '') #{i}
+                    li
+                        a
+                            span &raquo;
+            div.row
+                div.col-md-1
+                    a.glyphicon.glyphicon-plus.text-primary(data-toggle='modal',data-target='#addNews') 添加
+                div.col-md-2.col-md-offset-9
+                    div.msgBox
+                        -if(error == '新闻发布失败!')
+                            script.
+                                swal('新闻添加失败!', '新闻添加失败!请重试', 'error');
+                        -else if(success == '新闻发布成功!')
+                            script.
+                                swal('新闻添加成功!','','success');
+                                broadCastNews();
+                        -else if(error == '新闻内容更新失败!')
+                            script.
+                                swal('新闻内容更新失败!', '新闻内容更新失败!请重试', 'error');
+                        -else if(success == '新闻内容更新成功!')
+                            script.
+                                swal('新闻内容更新成功!', '', 'success');
+        div.modal.fade#update
+            div.modal-dialog
+                div.modal-content
+                    div.modal-header
+                        h3 修改新闻
+                    div.modal-body
+                        form.form-horizontal(action='updateNews',method='post',enctype='multipart/form-data',id='updateForm')
+                            div.form-group
+                                input(type='hidden',name='id')
+                                label.col-md-2.control-label 新闻标题:
+                                div.col-md-9
+                                    input(type='text',placeholder='请输入新闻标题',class='form-control',name='title')
+                            div.form-group
+                                label.col-md-2.control-label 新闻标题:
+                                div.col-md-9
+                                    textarea(placeholder='请输入新闻内容',name='content',class='form-control',rows='12')
+                            div.form-group
+                                label.col-md-2.control-label 新闻类型:
+                                div.col-md-9
+                                    select.update.form-control(name='kind')
+                                        option(value='normal') 普通新闻
+                                        option(value='hot') 热点新闻
+                            div.form-group.collapse#hot1
+                                label.col-md-2.control-label 新闻图片:
+                                div.col-md-3
+                                    input(type='file',name='picture')
+                    div.modal-footer
+                        button.btn.btn-success(form='updateForm') 更新
+                        button.btn.btn-danger(data-dismiss='modal') 取消
+        div.modal.fade#addNews
+            div.modal-dialog
+                div.modal-content
+                    div.modal-header 添加新闻
+                    div.modal-body
+                        form.form-horizontal(action='addNews',method='post',enctype='multipart/form-data',id='newsForm')
+                            div.form-group
+                                label.col-md-2.control-label 新闻标题:
+                                div.col-md-9
+                                    input(type='text',placeholder='请输入新闻标题',class='form-control',name='title')
+                            div.form-group
+                                label.col-md-2.control-label 新闻标题:
+                                div.col-md-9
+                                    textarea(placeholder='请输入新闻内容',name='content',class='form-control',rows='12')
+                            div.form-group
+                                label.col-md-2.control-label 新闻类型:
+                                div.col-md-9
+                                    select.add.form-control(name='kind')
+                                        option(value='normal') 普通新闻
+                                        option(data-toggle='collapse',data-target='#hot',value='hot') 热点新闻
+                            div.form-group.collapse#hot
+                                label.col-md-2.control-label 新闻图片:
+                                div.col-md-3
+                                    input(type='file',name='picture')
+                    div.modal-footer
+                        button.btn.btn-success(form='newsForm') 添加
+                        button.btn.btn-danger(data-dismiss='modal') 取消

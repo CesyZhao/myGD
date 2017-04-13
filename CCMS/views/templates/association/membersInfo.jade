@@ -1,0 +1,57 @@
+extends ../../asses
+block contents
+    div.content.col-md-10
+        div.row.box
+            div.search.row
+                div.col-md-12
+                    div.row
+                        div.col-md-6.choice
+                            span 种类:#{ass_info}
+                            a(href='toMembers?id=#{ass_info_id}',class="#{categoryMems ? '' : 'active'}") 全部
+                            a(href="toMembers?id=#{ass_info_id}&category=男",class="#{categoryMems == '男' ? 'active' : ''}") 男生
+                            a(href="toMembers?id=#{ass_info_id}&category=女",class="#{categoryMems == '女' ? 'active' : ''}") 女生
+                        div.col-md-6
+                            form.form-horizontal(method='get',action='toMembers')
+                                div.form-group
+                                    label.col-md-6
+                                    div.col-md-4
+                                        input(type='hidden',name='id',value='#{ass_info_id}')
+                                        input(type='text',name='searchWords',class='form-control',placeholder='请输入查询用户名')
+                                    div.col-md-1
+                                        button.btn.btn-primary 查询
+                    table.table.table-hover.table-bordered
+                        thead.text-center
+                            th 序号
+                            th 用户名
+                            th 性别
+                            th 年龄
+                            th 爱好
+                            th 操作
+                        tbody
+                            each item,index in members
+                                tr.tr
+                                    //多选框
+                                    td #{index + 1}
+                                        input(type='hidden',class='check',value='#{item.id}')
+                                    //社团名
+                                    td #{item.username}
+                                    //关键字
+                                    td #{item.gender}
+                                    //审核状态
+                                    td #{item.age}
+                                    td #{item.hobby}
+                                    td
+                    nav.pagePanel.col-md-6.col-md-offset-3.text-center
+                        ul.pagination
+                            li
+                                a
+                                    span &laquo;
+                            -for(var i=1; i<=pagesMem; i++)
+                                li
+                                    -if(categoryMems)
+                                        a(href='toMyApply?page=' + i + '&category=' + categoryApply + '') #{i}
+                                    -else
+                                        a(href='toMyApply?page=' + i + '') #{i}
+                            li
+                                a
+                                    span &raquo;
